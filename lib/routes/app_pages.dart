@@ -4,7 +4,11 @@ import 'package:atfb/view/auth/new_password.dart';
 import 'package:atfb/view/auth/verify_otp_forgot_password.dart';
 import 'package:atfb/view/dashboard/home/home_screen.dart';
 import 'package:atfb/view/dashboard/home/view_full_day.dart';
+import 'package:atfb/view/dashboard/profile/change_password.dart';
+import 'package:atfb/view/dashboard/profile/delete_account.dart';
 import 'package:get/get.dart';
+
+import '../view/intro_screens/intro_screen.dart';
 
 class AppPages {
   static appRoutes(context) => [
@@ -13,6 +17,11 @@ class AppPages {
         GetPage(name: PageNames.verifyOtp, page: () => const VerifyOtp()),
         GetPage(name: PageNames.newPassword, page: () => const NewPassword()),
         GetPage(name: PageNames.viewFullDay, page: () => const ViewFullDay()),
+        GetPage(name: PageNames.introScreens, page: () => const IntroScreen()),
+        GetPage(
+            name: PageNames.deleteAccount, page: () => const DeleteAccount()),
+        GetPage(
+            name: PageNames.changePassword, page: () => const ChangePassword()),
         GetPage(
             name: PageNames.forgotPassword, page: () => const ForgotPassword()),
         GetPage(

@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Get.offAllNamed(PageNames.loginScreen);
           }
         } else {
-          Get.offAllNamed(PageNames.loginScreen);
+          Get.offAllNamed(PageNames.introScreens);
         }
       },
     );

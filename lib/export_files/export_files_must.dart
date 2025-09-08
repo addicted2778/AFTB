@@ -1,3 +1,5 @@
+export 'package:flutter/material.dart';
+
 export 'package:atfb/styles/app_colors.dart';
 export 'package:atfb/styles/app_textstyle.dart';
 export 'package:atfb/styles/app_images.dart';

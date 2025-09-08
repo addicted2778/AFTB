@@ -467,7 +467,9 @@ class API {
 class APIEndPoints {
   static const userLogin = 'login';
   static const forgotPassword = 'forgot-password';
+  static const resetPassword = 'reset-password';
   static const verifyOtp = 'verify-otp';
+  static const deleteAccount = 'delete-account';
   static const updatePassword = 'update-password';
   static const timetable = 'timetable';
   static const siteSetting = 'site-setting';

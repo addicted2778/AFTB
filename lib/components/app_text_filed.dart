@@ -18,7 +18,7 @@ class AppTextFiled extends StatelessWidget {
       this.controller,
       this.validator,
       this.suffixIcon,
-      this.prefixIcon = '',
+      this.prefixIcon,
       this.errorText = '',
       this.style,
       this.onChanged,
@@ -50,8 +50,8 @@ class AppTextFiled extends StatelessWidget {
   final Color color;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  final IconData? suffixIcon;
-  final String? prefixIcon;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final String? errorText;
   final TextStyle? style;
   final TextStyle? hintStyle;
@@ -73,9 +73,13 @@ class AppTextFiled extends StatelessWidget {
     return TextFormField(
       validator: validator,
       controller: controller,
+      obscureText: obscureText,
       style: AppTextStyle.mediumCustom(color: Colors.black),
+      maxLines: maxlines,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.email_outlined, color: AppColor.primaryColor),
+        alignLabelWithHint: true,
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: AppTextStyle.mediumCustom(color: AppColor.primaryColor),
         enabledBorder: UnderlineInputBorder(

@@ -8,5 +8,8 @@ class PageNames {
   static const String verifyOtp = '/verify_otp_forgot_password';
   static const String newPassword = '/new_password';
   static const String viewFullDay = '/view_full_day';
+  static const String introScreens = '/intro_screen';
+  static const String changePassword = '/change_password';
   static const String profileScreen = '/profile';
+  static const String deleteAccount = '/delete_account';
 }

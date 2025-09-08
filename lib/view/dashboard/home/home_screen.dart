@@ -65,82 +65,94 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: AppColor.primaryColor,
                         ),
                       ))
-                    : Expanded(
-                        child: SingleChildScrollView(
-                            child: Obx(
-                          () => ListView.separated(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: controller.dashboardModel.value.data!
-                                .timetable!.first.data!.length,
-                            separatorBuilder: (context, index) =>
-                                spacing(height: 20),
-                            itemBuilder: (context, index) {
-                              final data = controller.dashboardModel.value.data!
-                                  .timetable!.first.data![index];
+                    : (controller.dashboardModel.value.data!.timetable!.isEmpty)
+                        ? Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'No Data Found',
+                                style: AppTextStyle.semiBoldBlack(fontSize: 18),
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: SingleChildScrollView(
+                                child: Obx(
+                              () => ListView.separated(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: controller.dashboardModel.value.data!
+                                    .timetable!.first.data!.length,
+                                separatorBuilder: (context, index) =>
+                                    spacing(height: 20),
+                                itemBuilder: (context, index) {
+                                  final data = controller.dashboardModel.value
+                                      .data!.timetable!.first.data![index];
 
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: AppColor.hex(
-                                          data.activity!.colorCode!),
-                                      width: 1),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 12),
-                                      decoration: BoxDecoration(
-                                        color: AppColor.hex(
-                                            data.activity!.colorCode!),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(12),
-                                          topRight: Radius.circular(12),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        data.activity!.name!,
-                                        style: AppTextStyle.regularBlack(
-                                          fontSize: 19,
-                                        ),
-                                      ),
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: AppColor.hex(
+                                              data.activity!.colorCode!),
+                                          width: 1),
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 12, top: 12),
-                                      child: Text(
-                                        "10:00 AM – 11:00 AM",
-                                        style: AppTextStyle.regularBlack(
-                                          fontSize: 15,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 12),
+                                          decoration: BoxDecoration(
+                                            color: AppColor.hex(
+                                                data.activity!.colorCode!),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              topRight: Radius.circular(12),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            data.activity!.name!,
+                                            style: AppTextStyle.regularBlack(
+                                              fontSize: 19,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 12, top: 12),
+                                          child: Text(
+                                            "10:00 AM – 11:00 AM",
+                                            style: AppTextStyle.regularBlack(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 12,
+                                              top: 6,
+                                              bottom: 12,
+                                              right: 12),
+                                          child: Text(
+                                            data.activity!.name!,
+                                            style: AppTextStyle.regularBlack(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 12,
-                                          top: 6,
-                                          bottom: 12,
-                                          right: 12),
-                                      child: Text(
-                                        data.activity!.name!,
-                                        style: AppTextStyle.regularBlack(
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
+                                  );
+                                },
+                              ),
+                            )),
                           ),
-                        )),
-                      ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,

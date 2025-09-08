@@ -1,3 +1,4 @@
+import 'package:atfb/components/app_web_view.dart';
 import 'package:atfb/components/custom_app_bar.dart';
 import 'package:atfb/export_files/export_files_must.dart';
 import 'package:atfb/utils/const.dart';
@@ -116,7 +117,9 @@ class _ProfileState extends State<Profile> {
             commmonContainer(
                 titleImage: AppImages.changePassword,
                 titleText: 'Change Password',
-                onTap: () {}),
+                onTap: () {
+                  Get.toNamed(PageNames.changePassword);
+                }),
             commmonContainer(
                 titleImage: AppImages.membership,
                 titleText: 'Membership',
@@ -124,11 +127,20 @@ class _ProfileState extends State<Profile> {
             commmonContainer(
                 titleImage: AppImages.privacyPolicy,
                 titleText: 'Privacy Policy',
-                onTap: () {}),
+                onTap: () {
+                  Get.to(CustomWebView(
+                      appBarTitle: 'Privacy Policy',
+                      url: 'https://kbdevs.com/atfb/privacy-policy?type=app'));
+                }),
             commmonContainer(
                 titleImage: AppImages.termsAndCondition,
                 titleText: 'T&C',
-                onTap: () {}),
+                onTap: () {
+                  Get.to(CustomWebView(
+                      appBarTitle: 'Terms And Conditions',
+                      url:
+                          'https://kbdevs.com/atfb/terms-and-conditions?type=app'));
+                }),
             commmonContainer(
                 titleImage: AppImages.changePassword,
                 titleText: 'Logout',
@@ -152,10 +164,13 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  'Delete your account',
-                  style: AppTextStyle.mediumCustom(
-                      fontSize: 12, color: Colors.red),
+                child: InkWell(
+                  onTap: () => Get.toNamed(PageNames.deleteAccount),
+                  child: Text(
+                    'Delete your account',
+                    style: AppTextStyle.mediumCustom(
+                        fontSize: 12, color: Colors.red),
+                  ),
                 ),
               ),
             ),

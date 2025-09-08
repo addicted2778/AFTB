@@ -49,6 +49,9 @@ dependencies:
   flutter_svg: ^2.1.0
   dotted_border: ^2.1.0
   syncfusion_flutter_calendar: ^30.2.7
+  dots_indicator: ^4.0.1
+  webview_flutter: ^4.13.0
+
 
 dev_dependencies:
   flutter_test:

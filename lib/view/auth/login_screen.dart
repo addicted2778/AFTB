@@ -1,4 +1,5 @@
 import 'package:atfb/components/app_buttons/full_width_button.dart';
+import 'package:atfb/components/app_web_view.dart';
 import 'package:atfb/export_files/export_files_must.dart';
 import 'package:atfb/styles/app_images.dart';
 import 'package:atfb/utils/custom_validation.dart';
@@ -130,9 +131,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             isLoading: controller.isLoading.value,
                             buttonText: 'Login',
                             buttonTap: () {
-                              if (emailKey.currentState!.validate() &&
-                                  passwordKey.currentState!.validate()) {
-                                controller.userLogin();
+                              if (controller.checkBoxEnable.value) {
+                                if (emailKey.currentState!.validate() &&
+                                    passwordKey.currentState!.validate()) {
+                                  controller.userLogin();
+                                }
+                              } else {
+                                'Please accept terms and conditions and privacy policy'
+                                    .showSnackBar();
                               }
                             }),
                       ),
@@ -165,10 +171,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextSpan(
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            /*  Get.to(WebViewCustom(
+                                            Get.to(CustomWebView(
                                                 appBarTitle:
                                                     'Terms And Conditions',
-                                                url: termsAndConditionUrl));*/
+                                                url:
+                                                    'https://kbdevs.com/atfb/terms-and-conditions?type=app'));
                                           },
                                         text: 'Terms and Conditions',
                                         style: AppTextStyle.boldPrimary(
@@ -188,9 +195,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextSpan(
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            // Get.to(WebViewCustom(
-                                            //     appBarTitle: 'Privacy Policy',
-                                            //     url: privacyPolicyUrl));
+                                            Get.to(CustomWebView(
+                                                appBarTitle: 'Privacy Policy',
+                                                url:
+                                                    'https://kbdevs.com/atfb/privacy-policy?type=app'));
                                           },
                                         text: ' Privacy Policy',
                                         style: AppTextStyle.boldPrimary(
