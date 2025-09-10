@@ -26,15 +26,16 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-        backgroundColor: AppColor.primaryColor,
-
-        body: Column(
-          children: [
-            spacing(height: 30),
-
-            CustomAppBar(appbarTitle: 'Profile',isLeading: false,),
-
-            Expanded(child: Container(
+      backgroundColor: AppColor.primaryColor,
+      body: Column(
+        children: [
+          spacing(height: 30),
+          CustomAppBar(
+            appbarTitle: 'Profile',
+            isLeading: false,
+          ),
+          Expanded(
+            child: Container(
               color: Colors.white,
               child: SingleChildScrollView(
                 child: Column(
@@ -48,24 +49,26 @@ class _ProfileState extends State<Profile> {
                           dashPattern: [6, 3], // dotted effect
                           padding: const EdgeInsets.all(4),
                           child: ClipOval(
-                            child: (siteSettingData.value.profile!.profilePhoto == null)
-                                ? Image.asset(
-                              height: 100,
-                              width: 100,
-                              AppImages.profile,
-                              fit: BoxFit.cover,
-                            )
-                                : CachedNetworkImage(
-                                progressIndicatorBuilder:
-                                    (context, url, progress) =>
-                                    CircularProgressIndicator(
-                                      color: AppColor.primaryColor,
-                                    ),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                siteSettingData.value.profile!.profilePhoto!),
+                            child:
+                                (siteSettingData.value.profile!.profilePhoto ==
+                                        null)
+                                    ? Image.asset(
+                                        height: 100,
+                                        width: 100,
+                                        AppImages.profile,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : CachedNetworkImage(
+                                        progressIndicatorBuilder:
+                                            (context, url, progress) =>
+                                                CircularProgressIndicator(
+                                                  color: AppColor.primaryColor,
+                                                ),
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                        imageUrl: siteSettingData
+                                            .value.profile!.profilePhoto!),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -131,14 +134,17 @@ class _ProfileState extends State<Profile> {
                     commmonContainer(
                         titleImage: AppImages.membership,
                         titleText: 'Membership',
-                        onTap: () {}),
+                        onTap: () {
+                          Get.toNamed(PageNames.membership);
+                        }),
                     commmonContainer(
                         titleImage: AppImages.privacyPolicy,
                         titleText: 'Privacy Policy',
                         onTap: () {
                           Get.to(CustomWebView(
                               appBarTitle: 'Privacy Policy',
-                              url: 'https://kbdevs.com/atfb/privacy-policy?type=app'));
+                              url:
+                                  'https://kbdevs.com/atfb/privacy-policy?type=app'));
                         }),
                     commmonContainer(
                         titleImage: AppImages.termsAndCondition,
@@ -147,7 +153,7 @@ class _ProfileState extends State<Profile> {
                           Get.to(CustomWebView(
                               appBarTitle: 'Terms And Conditions',
                               url:
-                              'https://kbdevs.com/atfb/terms-and-conditions?type=app'));
+                                  'https://kbdevs.com/atfb/terms-and-conditions?type=app'));
                         }),
                     commmonContainer(
                         titleImage: AppImages.changePassword,
@@ -158,10 +164,10 @@ class _ProfileState extends State<Profile> {
                               positiveButtonText: 'Yes',
                               negativeButtonText: 'No',
                               isNegativeShown: true, positiveOnTap: () {
-                                controller.logout();
-                              }, neagtiveOnTap: () {
-                                Navigator.pop(context);
-                              });
+                            controller.logout();
+                          }, neagtiveOnTap: () {
+                            Navigator.pop(context);
+                          });
                         }),
                     Divider(
                       color: AppColor.primaryColor.withOpacity(0.34),
@@ -186,9 +192,10 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
-            ),)
-          ],
-        ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

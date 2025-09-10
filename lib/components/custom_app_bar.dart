@@ -29,15 +29,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       leading: isLeading
           ? InkWell(
-        onTap: () => Get.back(),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(
-            Icons.arrow_back,
-            color: AppColor.primaryColor,
-          ),
-        ),
-      )
+              onTap: () => Get.back(),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: AppColor.primaryColor,
+                ),
+              ),
+            )
           : null,
       centerTitle: true,
       title: Text(

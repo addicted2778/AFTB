@@ -7,6 +7,7 @@ class AppColor {
   static final Color black1212OP60 = hex('#121212').withOpacity(0.60);
   static final Color lightPrimaryOP43 = hex('#FCC98E').withOpacity(0.43);
   static final Color lightPrimary = hex('#FCC98E');
+  static final Color lightPrimaryA600 = hex('#EDA600');
   static final Color grey606060 = hex('#606060');
   static final Color grey808080 = hex('#808080');
   static final Color black2E2A2A = hex('#2E2A2A');

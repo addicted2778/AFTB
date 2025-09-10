@@ -78,6 +78,7 @@ class AppTextFiled extends StatelessWidget {
       keyboardType: keyboardType,
       style: AppTextStyle.regularCustom(color: Colors.black),
       maxLines: maxlines,
+      cursorColor: AppColor.primaryColor,
       decoration: InputDecoration(
         // alignLabelWithHint: true,
         suffixIcon: suffixIcon,
