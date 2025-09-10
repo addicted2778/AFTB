@@ -92,6 +92,7 @@ class _ProfileState extends State<Profile> {
                     )),
                 spacing(width: 20),*/
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       siteSettingData.value.profile!.firstName!,
@@ -167,7 +168,7 @@ class _ProfileState extends State<Profile> {
                 child: InkWell(
                   onTap: () => Get.toNamed(PageNames.deleteAccount),
                   child: Text(
-                    'Delete your account',
+                    'Delete My Account',
                     style: AppTextStyle.mediumCustom(
                         fontSize: 12, color: Colors.red),
                   ),

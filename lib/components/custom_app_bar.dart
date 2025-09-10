@@ -22,9 +22,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: AppColor.primaryColor,
-        statusBarIconBrightness: Brightness.light,
+        // statusBarIconBrightness: Brightness.light,
       ),
       leading: (isLeading)
           ? InkWell(

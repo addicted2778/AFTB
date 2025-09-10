@@ -6,6 +6,7 @@ class AppColor {
   static final Color primaryColor = hex('#E28725');
   static final Color black1212OP60 = hex('#121212').withOpacity(0.60);
   static final Color lightPrimaryOP43 = hex('#FCC98E').withOpacity(0.43);
+  static final Color lightPrimary = hex('#FCC98E');
   static final Color grey606060 = hex('#606060');
   static final Color grey808080 = hex('#808080');
   static final Color black2E2A2A = hex('#2E2A2A');
@@ -14,6 +15,7 @@ class AppColor {
   static final Color grey8C8C8C = hex('#8C8C8C');
   static final Color green34A853 = hex('#34A853');
   static final Color grey616361 = hex('#616361');
+  static final Color grey121212 = hex('#121212');
   static final Color greyECECEC = hex('#ECECEC');
   static final Color grey858996 = hex('#858996');
   static final Color greyEFEFEF = hex('#EFEFEF');

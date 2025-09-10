@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               alignment: Alignment.center,
                               child: Text(
-                                'No Data Found',
+                                'You don’t have anything for today.',
                                 style: AppTextStyle.semiBoldBlack(fontSize: 18),
                               ),
                             ),
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              spacing(height: 30)
+              spacing(height: 35)
             ],
           ),
         ));

@@ -54,6 +54,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   Form(
                     key: emailKey,
                     child: AppTextFiled(
+                      keyboardType: TextInputType.emailAddress,
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: AppColor.primaryColor,
+                      ),
                       validator: (value) =>
                           CustomValidations.validateEmail(value ?? ''),
                       controller: controller.emailTextfield,

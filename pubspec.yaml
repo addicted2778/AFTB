@@ -51,6 +51,7 @@ dependencies:
   syncfusion_flutter_calendar: ^30.2.7
   dots_indicator: ^4.0.1
   webview_flutter: ^4.13.0
+  keyboard_actions: ^4.2.0
 
 
 dev_dependencies:

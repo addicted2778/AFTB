@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 
+import '../utils/global.dart';
+
 class AppBottomBar extends StatefulWidget {
   AppBottomBar({super.key, required this.selectedIndex});
   int selectedIndex = 1;
@@ -22,122 +24,183 @@ class _AppBottomBarState extends State<AppBottomBar> {
     {"icon": Icons.person, "label": "Account"},
   ];
 
+  void _onItemTapped(int index) {
+    setState(() {
+      widget.selectedIndex = index;
+    });
+  }
+
+  iconBuilder(int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          widget.selectedIndex = index;
+        });
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon(index),
+            color: Colors.black,
+            size: 28,
+          ),
+          spacing(height: 2),
+          Text(
+            label(index),
+            style: AppTextStyle.regularBlack(fontSize: 13),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: openPage(widget.selectedIndex),
-      bottomNavigationBar: SizedBox(
-        height: 80,
+      bottomNavigationBar: Container(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 5),
+        height: 68,
+        decoration: BoxDecoration(color: AppColor.lightPrimaryOP43),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            // Bottom bar background
-            Container(
-              height: 60,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFF0DC), // light peach
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, -2),
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Week Plan (Left)
-                  GestureDetector(
-                    onTap: () => setState(() => widget.selectedIndex = 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.calendar_month,
-                            color: widget.selectedIndex == 0
-                                ? Colors.orange
-                                : Colors.black),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Week Plan",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: widget.selectedIndex == 0
-                                ? Colors.orange
-                                : Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(width: 80), // space for Home circle
-
-                  // Account (Right)
-                  GestureDetector(
-                    onTap: () => setState(() => widget.selectedIndex = 2),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.person,
-                            color: widget.selectedIndex == 2
-                                ? Colors.orange
-                                : Colors.black),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Account",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: widget.selectedIndex == 2
-                                ? Colors.orange
-                                : Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.selectedIndex == 0)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(0),
+                      ),
+                (widget.selectedIndex == 1)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(1),
+                      ),
+                (widget.selectedIndex == 2)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(2),
+                      ),
+              ],
             ),
-
-            // Floating Home Button (Always Center)
-            Positioned.fill(
-              top: -20,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: GestureDetector(
-                  onTap: () => setState(() => widget.selectedIndex = 1),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.orange,
-                          border: Border.all(
-                            color: Colors.orange.shade200,
-                            width: 4,
-                          ),
-                        ),
-                        child: const Icon(Icons.home, color: Colors.white),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "Home",
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: widget.selectedIndex == 1
-                              ? Colors.orange
-                              : Colors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
+            /*Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.selectedIndex == 0)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(0),
                 ),
-              ),
-            ),
+                (widget.selectedIndex == 1)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(1),
+                ),
+                (widget.selectedIndex == 2)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(2),
+                ),
+              ],
+            ),*/
+            if (widget.selectedIndex == 0)
+              Positioned(
+                  top: -35,
+                  left: 20,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
+                        ),
+                    height: 80,
+                    width: 80,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  )),
+            if (widget.selectedIndex == 1)
+              Positioned(
+                  top: -35,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
+                        ),
+                    height: 80,
+                    width: 80,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: const Icon(
+                        Icons.home,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  )),
+            if (widget.selectedIndex == 2)
+              Positioned(
+                  top: -35,
+                  right: 20,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
+                        ),
+                    height: 80,
+                    width: 80,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  )),
           ],
         ),
       ),
@@ -152,6 +215,28 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return HomeScreen();
       case 2:
         return Profile();
+    }
+  }
+
+  icon(int index) {
+    switch (index) {
+      case 0:
+        return Icons.calendar_month_outlined;
+      case 1:
+        return Icons.home_outlined;
+      case 2:
+        return Icons.person_outline;
+    }
+  }
+
+  label(int index) {
+    switch (index) {
+      case 0:
+        return "Week Plan";
+      case 1:
+        return "Home";
+      case 2:
+        return "Account";
     }
   }
 }

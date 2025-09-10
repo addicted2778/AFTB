@@ -71,17 +71,19 @@ class AppTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       validator: validator,
       controller: controller,
       obscureText: obscureText,
-      style: AppTextStyle.mediumCustom(color: Colors.black),
+      keyboardType: keyboardType,
+      style: AppTextStyle.regularCustom(color: Colors.black),
       maxLines: maxlines,
       decoration: InputDecoration(
-        alignLabelWithHint: true,
+        // alignLabelWithHint: true,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         hintText: hintText,
-        hintStyle: AppTextStyle.mediumCustom(color: AppColor.primaryColor),
+        hintStyle: AppTextStyle.regularCustom(color: AppColor.primaryColor),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: AppColor.primaryColor),
         ),

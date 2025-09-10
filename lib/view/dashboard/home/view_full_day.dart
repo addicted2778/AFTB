@@ -54,7 +54,7 @@ class _ViewFullDayState extends State<ViewFullDay> {
                 ? Container(
                     alignment: Alignment.center,
                     child: Text(
-                      'No Data Found',
+                      'You don’t have anything for today.',
                       style: AppTextStyle.semiBoldBlack(fontSize: 18),
                     ),
                   )

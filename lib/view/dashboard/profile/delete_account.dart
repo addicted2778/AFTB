@@ -30,10 +30,17 @@ class _DeleteAccountState extends State<DeleteAccount> {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
         child: Column(
           children: [
+            spacing(height: 10),
+            Text(
+              'Type a reason why you want to delete your accoun',
+              style: AppTextStyle.regularCustom(
+                  fontSize: 16, color: AppColor.black1212OP60),
+            ),
+            spacing(height: 20),
             Form(
               key: reasonKey,
               child: AppTextFiled(
-                hintText: 'Type a reason why you want to delete your account',
+                hintText: 'Type here',
                 maxlines: 8,
                 controller: controller.reasonController,
                 prefixIcon:
