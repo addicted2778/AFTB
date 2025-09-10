@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: AppColor.primaryColor));
+      SystemUiOverlayStyle(statusBarColor: AppColor.primaryColor,statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark, ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
@@ -18,6 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      themeMode: ThemeMode.light,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        applyElevationOverlayColor: false,
+        primarySwatch: AppColor.primaryColor.toMaterialColor()
+      ),
       getPages: AppPages.appRoutes(context),
       debugShowCheckedModeBanner: false,
       title: 'AFTB',

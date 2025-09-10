@@ -24,63 +24,62 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-        appbarTitle: 'Forgot Password',
-        isLeading: true,
-        onTap: () {
-          Get.back();
-        },
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            spacing(height: 10),
-            Text(
-              'Please enter your Email ID to reset the password',
-              style: AppTextStyle.regularCustom(
-                  fontSize: 16, color: AppColor.black1212OP60),
-            ),
-            spacing(height: 20),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColor.primaryColor)),
-              child: Column(
-                children: [
-                  Form(
-                    key: emailKey,
-                    child: AppTextFiled(
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
-                        color: AppColor.primaryColor,
-                      ),
-                      validator: (value) =>
-                          CustomValidations.validateEmail(value ?? ''),
-                      controller: controller.emailTextfield,
-                      hintText: 'Email',
-                    ),
-                  ),
-                  spacing(height: 20),
-                  Obx(
-                    () => FullWidthButton(
-                      buttonText: 'Submit',
-                      buttonTap: () {
-                        if (emailKey.currentState!.validate()) {
-                          controller.forgotPassword();
-                        }
-                      },
-                      isLoading: controller.isLoading.value,
-                    ),
-                  )
-                ],
+      backgroundColor: AppColor.primaryColor,
+      body: Container(
+        margin: EdgeInsets.only(top: 30),
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+
+            children: [
+              CustomAppBar(appbarTitle: 'Forgot Password',isLeading: true,),
+              spacing(height: 10),
+              Text(
+                'Please enter your Email ID to reset the password',
+                style: AppTextStyle.regularCustom(
+                    fontSize: 16, color: AppColor.black1212OP60),
               ),
-            )
-          ],
+              spacing(height: 20),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: AppColor.primaryColor)),
+                child: Column(
+                  children: [
+                    Form(
+                      key: emailKey,
+                      child: AppTextFiled(
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIcon: Icon(
+                          Icons.email_outlined,
+                          color: AppColor.primaryColor,
+                        ),
+                        validator: (value) =>
+                            CustomValidations.validateEmail(value ?? ''),
+                        controller: controller.emailTextfield,
+                        hintText: 'Email',
+                      ),
+                    ),
+                    spacing(height: 20),
+                    Obx(
+                      () => FullWidthButton(
+                        buttonText: 'Submit',
+                        buttonTap: () {
+                          if (emailKey.currentState!.validate()) {
+                            controller.forgotPassword();
+                          }
+                        },
+                        isLoading: controller.isLoading.value,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

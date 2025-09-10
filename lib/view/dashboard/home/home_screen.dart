@@ -36,49 +36,54 @@ class _HomeScreenState extends State<HomeScreen> {
     String formattedDate =
         DateFormat('EEEE, d MMMM yyyy').format(DateTime.now());
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Column(
-            children: [
-              spacing(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Today’s Activities',
-                  style: AppTextStyle.mediumCustom(
-                      color: AppColor.primaryColor, fontSize: 20),
-                ),
-              ),
-              spacing(height: 10),
-              Text(
-                formattedDate,
-                style: AppTextStyle.mediumBlack(fontSize: 20),
-              ),
-              spacing(height: 15),
-              Obx(
-                () => (controller.isLoading.value ||
-                        controller.dashboardModel.value.data == null)
-                    ? Expanded(
-                        child: Container(
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator(
-                          color: AppColor.primaryColor,
-                        ),
-                      ))
-                    : (controller.dashboardModel.value.data!.timetable!.isEmpty)
-                        ? Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'You don’t have anything for today.',
-                                style: AppTextStyle.semiBoldBlack(fontSize: 18),
-                              ),
+        backgroundColor: AppColor.primaryColor,
+        body: Column(
+          children: [
+            spacing(height: 30),
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    spacing(height: 20),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Today’s Activities',
+                        style: AppTextStyle.mediumCustom(
+                            color: AppColor.primaryColor, fontSize: 20),
+                      ),
+                    ),
+                    spacing(height: 10),
+                    Text(
+                      formattedDate,
+                      style: AppTextStyle.mediumBlack(fontSize: 20),
+                    ),
+                    spacing(height: 15),
+                    Obx(
+                          () => (controller.isLoading.value ||
+                          controller.dashboardModel.value.data == null)
+                          ? Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
                             ),
-                          )
-                        : Expanded(
-                            child: SingleChildScrollView(
-                                child: Obx(
-                              () => ListView.separated(
+                          ))
+                          : (controller.dashboardModel.value.data!.timetable!.isEmpty)
+                          ? Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'You don’t have anything for today.',
+                            style: AppTextStyle.semiBoldBlack(fontSize: 18),
+                          ),
+                        ),
+                      )
+                          : Expanded(
+                        child: SingleChildScrollView(
+                            child: Obx(
+                                  () => ListView.separated(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
@@ -101,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           width: double.infinity,
@@ -111,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: AppColor.hex(
                                                 data.activity!.colorCode!),
                                             borderRadius:
-                                                const BorderRadius.only(
+                                            const BorderRadius.only(
                                               topLeft: Radius.circular(12),
                                               topRight: Radius.circular(12),
                                             ),
@@ -152,31 +157,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               ),
                             )),
-                          ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  InkWell(
-                    onTap: () => Get.toNamed(PageNames.viewFullDay),
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                      decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Text(
-                        'View Full Day',
-                        style: AppTextStyle.semiBoldWhite(fontSize: 18),
                       ),
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InkWell(
+                          onTap: () => Get.toNamed(PageNames.viewFullDay),
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                            decoration: BoxDecoration(
+                                color: AppColor.primaryColor,
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Text(
+                              'View Full Day',
+                              style: AppTextStyle.semiBoldWhite(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    spacing(height: 35)
+                  ],
+                ),
               ),
-              spacing(height: 35)
-            ],
-          ),
+            ),
+          ],
         ));
   }
 }
