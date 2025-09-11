@@ -4,6 +4,7 @@ import 'package:atfb/export_files/export_files_must.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 spacing({double height = 0.0, double width = 0.0}) {
   return SizedBox(
@@ -116,55 +117,6 @@ customShowDailog(String? description,
                   ],
                 ),
               )
-              // ElevatedButton(
-              //   // key: keyCustom,
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: ColorStyle.primaryColor,
-              //     elevation: 2,
-              //     fixedSize: Size(50, 50),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(8),
-              //     ),
-              //   ),
-              //   onPressed: positiveOnTap,
-              //   child: Text(
-              //     negativeButtonText,
-              //     textAlign: TextAlign.center,
-              //     style: CustomTextStyle.centraTextStyle(
-              //         fontSize: 10,
-              //         fontWeight: FontWeight.w600,
-              //         color: Colors.white),
-              //   ),
-              // ),
-              //   //   ElevatedButton(
-              //   //   width: 90,
-              //   //   height: 30,
-              //   //   borderRadius: 7,
-              //   //   text: '${tr().txt_ok}',
-              //   //   elevation: 2,
-              //   //   textStyle: TextStylesInter.textStyles_12
-              //   //       .apply(fontWeightDelta: 2, color: Colors.white),
-              //   //   colorBG: ColorStyle.theme08454C,
-              //   //   onTap: (onTap == null)
-              //   //       ? () {
-              //   //     hideLoader();
-              //   //   }
-              //   //       : onTap,
-              //   // );
-              // ],
-
-              // actions: [
-              //   TextButton(
-              //       onPressed: () {},
-              //       child: Text(
-              //         '$positiveButtonText',
-              //         style: CustomTextStyle.centraTextStyle(
-              //             fontSize: 10,
-              //             fontWeight: FontWeight.w600,
-              //             color: Colors.black),
-              //       )),
-
-              // ],
             ]),
       );
     },
@@ -180,5 +132,117 @@ extension StringCustom on String {
     Get.closeAllSnackbars();
     return Get.snackbar('Alert', this,
         backgroundColor: AppColor.primaryColor, colorText: Colors.white);
+  }
+}
+
+uploadBottomSheet({
+  required BuildContext context,
+  Function()? takePhoto,
+  Function()? uploadGallery,
+  String labelText = 'Upload Profile Picture',
+}) {
+  return showModalBottomSheet(
+    isScrollControlled: false,
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(17), topRight: Radius.circular(17))),
+    context: context,
+    builder: (context) => Container(
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(17), topRight: Radius.circular(17))),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            spacing(
+              height: 20,
+            ),
+            Text(
+              labelText.tr,
+              style: AppTextStyle.boldBlack(
+                fontSize: 20,
+              ),
+            ),
+            spacing(
+              height: 16,
+            ),
+            Divider(
+              color: AppColor.primaryColor,
+              thickness: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: InkWell(
+                onTap: takePhoto,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Icon(
+                        Icons.camera_alt_outlined,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
+                    spacing(
+                      width: 20,
+                    ),
+                    Text('Take photo'.tr,
+                        style: AppTextStyle.mediumBlack(
+                          fontSize: 18,
+                        ))
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              color: AppColor.primaryColor,
+              thickness: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: InkWell(
+                onTap: uploadGallery,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Icon(
+                        Icons.photo,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
+                    spacing(
+                      width: 20,
+                    ),
+                    Text(
+                      'Upload from gallery'.tr,
+                      style: AppTextStyle.mediumBlack(
+                        fontSize: 18,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            spacing(height: 40),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+pickImage(
+    {required ImageSource imageSource, required BuildContext context}) async {
+  var pickedImage = await ImagePicker().pickImage(
+      source: imageSource,
+      imageQuality: 50,
+      preferredCameraDevice: CameraDevice.rear);
+  if (pickedImage != null) {
+    return pickedImage.path;
   }
 }

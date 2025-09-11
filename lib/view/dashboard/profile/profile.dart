@@ -40,39 +40,40 @@ class _ProfileState extends State<Profile> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DottedBorder(
-                          borderType: BorderType.Circle,
-                          color: AppColor.primaryColor,
-                          dashPattern: [6, 3], // dotted effect
-                          padding: const EdgeInsets.all(4),
-                          child: ClipOval(
-                            child:
-                                (siteSettingData.value.profile!.profilePhoto ==
-                                        null)
-                                    ? Image.asset(
-                                        height: 100,
-                                        width: 100,
-                                        AppImages.profile,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : CachedNetworkImage(
-                                        progressIndicatorBuilder:
-                                            (context, url, progress) =>
-                                                CircularProgressIndicator(
-                                                  color: AppColor.primaryColor,
-                                                ),
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                        imageUrl: siteSettingData
-                                            .value.profile!.profilePhoto!),
+                    Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DottedBorder(
+                            borderType: BorderType.Circle,
+                            color: AppColor.primaryColor,
+                            dashPattern: [6, 3], // dotted effect
+                            padding: const EdgeInsets.all(4),
+                            child: ClipOval(
+                              child: (siteSettingData
+                                          .value.profile!.profilePhoto ==
+                                      null)
+                                  ? Image.asset(
+                                      height: 100,
+                                      width: 100,
+                                      AppImages.profile,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : CachedNetworkImage(
+                                      progressIndicatorBuilder:
+                                          (context, url, progress) =>
+                                              CircularProgressIndicator(
+                                                color: AppColor.primaryColor,
+                                              ),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                      imageUrl: siteSettingData
+                                          .value.profile!.profilePhoto!),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        /*DottedBorder(
+                          const SizedBox(width: 16),
+                          /*DottedBorder(
                           borderType: BorderType.Circle,
                           color: AppColor.primaryColor,
                           padding: EdgeInsets.all(5),
@@ -101,30 +102,33 @@ class _ProfileState extends State<Profile> {
                             ),
                           )),
                       spacing(width: 20),*/
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              siteSettingData.value.profile!.firstName!,
-                              style: AppTextStyle.mediumCustom(
-                                  fontSize: 19, color: AppColor.primaryColor),
-                            ),
-                            Text(
-                              siteSettingData.value.profile!.patientId!,
-                              style: AppTextStyle.regularCustom(
-                                color: AppColor.grey808080,
-                                fontSize: 14,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                siteSettingData.value.profile!.firstName!,
+                                style: AppTextStyle.mediumCustom(
+                                    fontSize: 19, color: AppColor.primaryColor),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
+                              Text(
+                                siteSettingData.value.profile!.patientId!,
+                                style: AppTextStyle.regularCustom(
+                                  color: AppColor.grey808080,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     spacing(height: 20),
                     commmonContainer(
                         titleImage: AppImages.profile,
                         titleText: 'My Profile',
-                        onTap: () {}),
+                        onTap: () {
+                          Get.toNamed(PageNames.myProfile);
+                        }),
                     commmonContainer(
                         titleImage: AppImages.changePassword,
                         titleText: 'Change Password',
@@ -141,19 +145,25 @@ class _ProfileState extends State<Profile> {
                         titleImage: AppImages.privacyPolicy,
                         titleText: 'Privacy Policy',
                         onTap: () {
-                          Get.to(CustomWebView(
-                              appBarTitle: 'Privacy Policy',
-                              url:
-                                  'https://kbdevs.com/atfb/privacy-policy?type=app'));
+                          Get.to(
+                              CustomWebView(
+                                  appBarTitle: 'Privacy Policy',
+                                  url:
+                                      'https://kbdevs.com/atfb/privacy-policy?type=app'),
+                              transition: Transition.cupertino,
+                              duration: Duration(milliseconds: 600));
                         }),
                     commmonContainer(
                         titleImage: AppImages.termsAndCondition,
                         titleText: 'T&C',
                         onTap: () {
-                          Get.to(CustomWebView(
-                              appBarTitle: 'Terms And Conditions',
-                              url:
-                                  'https://kbdevs.com/atfb/terms-and-conditions?type=app'));
+                          Get.to(
+                              CustomWebView(
+                                  appBarTitle: 'Terms And Conditions',
+                                  url:
+                                      'https://kbdevs.com/atfb/terms-and-conditions?type=app'),
+                              transition: Transition.cupertino,
+                              duration: Duration(milliseconds: 600));
                         }),
                     commmonContainer(
                         titleImage: AppImages.changePassword,

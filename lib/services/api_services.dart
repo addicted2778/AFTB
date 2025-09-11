@@ -138,52 +138,6 @@ class API {
     }
   }
 
-  Future<http.Response> postStringBodyParams(
-      {required String endPoint,
-      required String params,
-      bool isHeader = false}) async {
-    if (!await _checkInternet()) {
-      return http.Response("", 0);
-    }
-
-    final url = Uri.parse(kBaseURL + endPoint);
-    //debugPrint(url.toString());
-
-    Map<String, String> header = {};
-    if (isHeader) {
-      header = {
-        'Content-Type':
-            'multipart/form-data; boundary=<calculated when request is sent>',
-        'Content-Length': '<calculated when request is sent>',
-        'Host': '<calculated when request is sent>',
-        'User-Agent': 'PostmanRuntime/7.32.3',
-        'Accept': '*/*',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-      };
-    }
-
-    try {
-      final response =
-          await http.post(url, body: params, headers: header).timeout(
-        const Duration(seconds: 1),
-        onTimeout: () {
-          return http.Response(
-              internetConnectPoorBody, internetConnectPoorCode);
-        },
-      );
-
-      checkInternetSlow(response);
-
-      return response;
-    } catch (error) {
-      //debugPrint('Error is:- ${error.toString()}');
-
-      final response = http.Response(error.toString(), apiExceptionCode);
-      return response;
-    }
-  }
-
   Future<http.Response> postImage({
     required String endPoint,
     required Map<String, dynamic> params,
@@ -211,8 +165,9 @@ class API {
 
     final request = http.MultipartRequest('POST', url);
 
-    request.headers['Content-Type'] = 'multipart/form-data';
-    request.headers['Authorization'] = '$tokenAPI';
+    request.headers['Accept'] = 'application/json';
+    request.headers['lang'] = 'en';
+    if (tokenAPI != '') request.headers["Authorization"] = "Bearer $tokenAPI";
 
     params.forEach((key, value) {
       request.fields[key] = value;
@@ -473,5 +428,6 @@ class APIEndPoints {
   static const updatePassword = 'update-password';
   static const timetable = 'timetable';
   static const siteSetting = 'site-setting';
+  static const updateProfile = 'update-profile';
   static const logout = 'logout';
 }

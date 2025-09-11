@@ -71,6 +71,8 @@ class AppTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      readOnly: readOnly,
       focusNode: focusNode,
       validator: validator,
       controller: controller,
@@ -79,7 +81,9 @@ class AppTextFiled extends StatelessWidget {
       style: AppTextStyle.regularCustom(color: Colors.black),
       maxLines: maxlines,
       cursorColor: AppColor.primaryColor,
+      maxLength: maxlength,
       decoration: InputDecoration(
+        counterText: '',
         // alignLabelWithHint: true,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,

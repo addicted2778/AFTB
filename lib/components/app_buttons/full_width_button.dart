@@ -23,7 +23,7 @@ class _FullWidthButtonState extends State<FullWidthButton> {
     return InkWell(
       onTap: widget.buttonTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(vertical: 12),
         width: double.infinity,
         decoration: BoxDecoration(
           color: AppColor.primaryColor,

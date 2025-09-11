@@ -13,4 +13,5 @@ class PageNames {
   static const String profileScreen = '/profile';
   static const String deleteAccount = '/delete_account';
   static const String membership = '/membership';
+  static const String myProfile = '/my_profile';
 }

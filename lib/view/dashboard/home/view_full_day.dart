@@ -36,8 +36,7 @@ class _ViewFullDayState extends State<ViewFullDay> {
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: Container(
-        margin: EdgeInsets.only(top:
-        30),
+        margin: EdgeInsets.only(top: 30),
         child: Column(
           children: [
             CustomAppBar(
@@ -48,8 +47,8 @@ class _ViewFullDayState extends State<ViewFullDay> {
               () => (controller.isLoading.value ||
                       controller.dashboardModel.value.data == null)
                   ? Expanded(
-                    child: Container(
-                                    color: Colors.white,
+                      child: Container(
+                        color: Colors.white,
                         height: Get.height,
                         width: Get.width,
                         alignment: Alignment.center,
@@ -57,49 +56,55 @@ class _ViewFullDayState extends State<ViewFullDay> {
                           color: AppColor.primaryColor,
                         ),
                       ),
-                  )
+                    )
                   : (controller.dashboardModel.value.data!.timetable!.isEmpty)
                       ? Expanded(
-                        child: Container(
+                          child: Container(
+                            height: Get.height,
+                            width: Get.width,
+                            color: Colors.white,
                             alignment: Alignment.center,
                             child: Text(
                               'You don’t have anything for today.',
                               style: AppTextStyle.semiBoldBlack(fontSize: 18),
                             ),
                           ),
-                      )
-                      :
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: ListView.separated(
+                        )
+                      : Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            child: ListView.separated(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: controller.dashboardModel.value.data!.timetable!
-                                  .first.data!.length,
-                              separatorBuilder: (context, index) => spacing(height: 20),
+                              itemCount: controller.dashboardModel.value.data!
+                                  .timetable!.first.data!.length,
+                              separatorBuilder: (context, index) =>
+                                  spacing(height: 20),
                               itemBuilder: (context, index) {
-                                final data = controller.dashboardModel.value.data!
-                                    .timetable!.first.data![index];
+                                final data = controller.dashboardModel.value
+                                    .data!.timetable!.first.data![index];
 
                                 return Container(
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                        color: AppColor.hex(data.activity!.colorCode!),
+                                        color: AppColor.hex(
+                                            data.activity!.colorCode!),
                                         width: 1),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         width: double.infinity,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 8, horizontal: 12),
                                         decoration: BoxDecoration(
-                                          color: AppColor.hex(data.activity!.colorCode!),
+                                          color: AppColor.hex(
+                                              data.activity!.colorCode!),
                                           borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(12),
                                             topRight: Radius.circular(12),
@@ -113,7 +118,8 @@ class _ViewFullDayState extends State<ViewFullDay> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(left: 12, top: 12),
+                                        padding:
+                                            EdgeInsets.only(left: 12, top: 12),
                                         child: Text(
                                           "10:00 AM – 11:00 AM",
                                           style: AppTextStyle.regularBlack(
@@ -123,7 +129,10 @@ class _ViewFullDayState extends State<ViewFullDay> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 12, top: 6, bottom: 12, right: 12),
+                                            left: 12,
+                                            top: 6,
+                                            bottom: 12,
+                                            right: 12),
                                         child: Text(
                                           data.activity!.name!,
                                           style: AppTextStyle.regularBlack(
@@ -136,8 +145,8 @@ class _ViewFullDayState extends State<ViewFullDay> {
                                 );
                               },
                             ),
-                ),
-              ),
+                          ),
+                        ),
             ),
           ],
         ),
