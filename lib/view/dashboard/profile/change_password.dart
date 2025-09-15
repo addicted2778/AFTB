@@ -27,121 +27,117 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
-      body: Container(
-        margin: EdgeInsets.only(top: 30),
-        color: Colors.white,
+      appBar: CustomAppBar(
+        appbarTitle: 'Change Password',
+        onTap: () => Get.back(),
+        isLeading: true,
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(appbarTitle: 'Change Password'),
-            Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Set a new password for your account'.tr,
-                    style: AppTextStyle.regularCustom(
-                        fontSize: 16, color: AppColor.black1212OP60),
+            Text(
+              'Set a new password for your account'.tr,
+              style: AppTextStyle.regularCustom(
+                  fontSize: 16, color: AppColor.black1212OP60),
+            ),
+            spacing(height: Get.height * 0.02),
+            Form(
+              key: currentPasswordKey,
+              child: AppTextFiled(
+                prefixIcon:
+                    Icon(Icons.lock_outline, color: AppColor.primaryColor),
+                validator: (value) =>
+                    CustomValidations.validateString(value ?? ''),
+                obscureText: controller.obscureCurrentPassword.value,
+                controller: controller.currentPasswordController,
+                hintText: 'Old Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    controller.obscureCurrentPassword.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColor.primaryColor,
                   ),
-                  spacing(height: Get.height * 0.02),
-                  Form(
-                    key: currentPasswordKey,
-                    child: AppTextFiled(
-                      prefixIcon:
-                      Icon(Icons.lock_outline, color: AppColor.primaryColor),
-                      validator: (value) =>
-                          CustomValidations.validateString(value ?? ''),
-                      obscureText: controller.obscureCurrentPassword.value,
-                      controller: controller.currentPasswordController,
-                      hintText: 'Old Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.obscureCurrentPassword.value
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                          color: AppColor.primaryColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            controller.obscureCurrentPassword.value =
-                            !controller.obscureCurrentPassword.value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  spacing(height: 30),
-                  Form(
-                    key: newPasswordKey,
-                    child: AppTextFiled(
-                      prefixIcon:
-                      Icon(Icons.lock_outline, color: AppColor.primaryColor),
-                      validator: (value) =>
-                          CustomValidations.validateString(value ?? ''),
-                      obscureText: controller.obscureNewPassword.value,
-                      controller: controller.newPasswordController,
-                      hintText: 'New Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.obscureNewPassword.value
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                          color: AppColor.primaryColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            controller.obscureNewPassword.value =
-                            !controller.obscureNewPassword.value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  spacing(height: 30),
-                  Form(
-                    key: confirmPasswordKey,
-                    child: AppTextFiled(
-                      prefixIcon:
-                      Icon(Icons.lock_outline, color: AppColor.primaryColor),
-                      validator: (value) =>
-                          CustomValidations.validateString(value ?? ''),
-                      obscureText: controller.obscureConfirmPassword.value,
-                      controller: controller.confirmPasswordController,
-                      hintText: 'Confirm New Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.obscureConfirmPassword.value
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                          color: AppColor.primaryColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            controller.obscureConfirmPassword.value =
-                            !controller.obscureConfirmPassword.value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  spacing(height: 30),
-                  Obx(
-                        () => FullWidthButton(
-                      buttonText: 'Submit',
-                      isLoading: controller.isLoading.value,
-                      buttonTap: () {
-                        if (currentPasswordKey.currentState!.validate() &&
-                            newPasswordKey.currentState!.validate() &&
-                            confirmPasswordKey.currentState!.validate()) {
-                          controller.changePassword();
-                        }
-                      },
-                    ),
-                  )
-                ],
+                  onPressed: () {
+                    setState(() {
+                      controller.obscureCurrentPassword.value =
+                          !controller.obscureCurrentPassword.value;
+                    });
+                  },
+                ),
               ),
             ),
+            spacing(height: 30),
+            Form(
+              key: newPasswordKey,
+              child: AppTextFiled(
+                prefixIcon:
+                    Icon(Icons.lock_outline, color: AppColor.primaryColor),
+                validator: (value) =>
+                    CustomValidations.validateString(value ?? ''),
+                obscureText: controller.obscureNewPassword.value,
+                controller: controller.newPasswordController,
+                hintText: 'New Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    controller.obscureNewPassword.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColor.primaryColor,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      controller.obscureNewPassword.value =
+                          !controller.obscureNewPassword.value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            spacing(height: 30),
+            Form(
+              key: confirmPasswordKey,
+              child: AppTextFiled(
+                prefixIcon:
+                    Icon(Icons.lock_outline, color: AppColor.primaryColor),
+                validator: (value) =>
+                    CustomValidations.validateString(value ?? ''),
+                obscureText: controller.obscureConfirmPassword.value,
+                controller: controller.confirmPasswordController,
+                hintText: 'Confirm New Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    controller.obscureConfirmPassword.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColor.primaryColor,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      controller.obscureConfirmPassword.value =
+                          !controller.obscureConfirmPassword.value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            spacing(height: 30),
+            Obx(
+              () => FullWidthButton(
+                buttonText: 'Submit',
+                isLoading: controller.isLoading.value,
+                buttonTap: () {
+                  if (currentPasswordKey.currentState!.validate() &&
+                      newPasswordKey.currentState!.validate() &&
+                      confirmPasswordKey.currentState!.validate()) {
+                    controller.changePassword();
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),

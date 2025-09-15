@@ -424,6 +424,7 @@ class APIEndPoints {
   static const forgotPassword = 'forgot-password';
   static const resetPassword = 'reset-password';
   static const verifyOtp = 'verify-otp';
+  static const resendOtp = 'resend-otp';
   static const deleteAccount = 'delete-account';
   static const updatePassword = 'update-password';
   static const timetable = 'timetable';

@@ -16,88 +16,115 @@ class WeeklyPlan extends StatefulWidget {
 class _WeeklyPlanState extends State<WeeklyPlan> {
   WeeklyPlanController controller = Get.put(WeeklyPlanController());
 
+  late DateTime currentStart;
+  late DateTime currentEnd;
+  late DateTime baseDate;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    baseDate = DateTime.now();
+    currentStart = controller.getStartOfWeek(baseDate);
+    currentEnd = controller.getEndOfWeek(baseDate);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => controller.weeklyData(),
+      (_) => controller.weeklyData(
+          endDate: currentEnd,
+          startDate: currentStart,
+          isCallingFirstTime: true),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.primaryColor,
-        body: Column(
-          children: [
-            spacing(height: 30),
-            CustomAppBar(appbarTitle: 'Weekly Plan',isLeading: false,),
-            Obx(
-                  () => (controller.isLoading.value)
-                  ? Expanded(
-                    child: Container(
-                      color: Colors.white,
-                                    height: Get.height,
-                                    width: Get.width,
-                                    alignment: Alignment.center,
-                                    child: CircularProgressIndicator(
-                    color: AppColor.primaryColor,
-                                    ),
-                                  ),
-                  )
-                  : Expanded(child: SfCalendar(
-                    viewHeaderHeight: 80,
-                    showCurrentTimeIndicator: false,
-                    scheduleViewSettings: ScheduleViewSettings(
-                        monthHeaderSettings: MonthHeaderSettings(
-                          backgroundColor: Colors.white,
-                          monthTextStyle: AppTextStyle.regularBlack(fontSize: 12),
-                        ),
-                        weekHeaderSettings:
-                        WeekHeaderSettings(backgroundColor: Colors.red)),
-                    timeSlotViewSettings: TimeSlotViewSettings(
-                        numberOfDaysInView: 3,
-                        dayFormat: 'E',
-                        timeTextStyle: AppTextStyle.regularBlack(fontSize: 12),
-                        startHour: 00,
-                        endHour: 24,
-                        timeFormat: 'h:mm a'),
-                    cellBorderColor: Colors.white,
-                    todayHighlightColor: AppColor.primaryColor,
-                    showTodayButton: false,
-                    viewNavigationMode: ViewNavigationMode.snap,
-                    todayTextStyle: AppTextStyle.mediumCustom(
-                        color: Colors.white, fontSize: 15),
-                    viewHeaderStyle: ViewHeaderStyle(
-                        backgroundColor: Colors.white,
-                        dayTextStyle: AppTextStyle.regularCustom(
-                            color: AppColor.grey121212.withOpacity(0.60),
-                            fontSize: 15),
-                        dateTextStyle: AppTextStyle.regularBlack(fontSize: 15)),
-                    weekNumberStyle: WeekNumberStyle(
-                        backgroundColor: Colors.white,
-                        textStyle: AppTextStyle.mediumCustom(
-                            color: AppColor.primaryColor, fontSize: 15)),
-                    allowViewNavigation: true,
-                    backgroundColor: Colors.white,
-                    dataSource: MeetingDataSource(controller.totalMeetings),
-                    view: CalendarView.day,
-                    monthViewSettings: const MonthViewSettings(
-                      appointmentDisplayMode:
-                      MonthAppointmentDisplayMode.appointment,
+        appBar: CustomAppBar(
+          appbarTitle: 'Weekly Plan',
+          isLeading: false,
+        ),
+        backgroundColor: Colors.white,
+        body: Obx(() => (controller.isLoading.value)
+            ? Container(
+                color: Colors.white,
+                height: Get.height,
+                width: Get.width,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: AppColor.primaryColor,
+                ),
+              )
+            : Obx(
+                () => SfCalendar(
+                  viewHeaderHeight: 80,
+                  showCurrentTimeIndicator: false,
+                  scheduleViewSettings: ScheduleViewSettings(
+                    monthHeaderSettings: MonthHeaderSettings(
+                      backgroundColor: Colors.white,
+                      monthTextStyle: AppTextStyle.regularBlack(fontSize: 12),
                     ),
-                  ),)
-            )
-          ],
-        ));
+                  ),
+                  timeSlotViewSettings: TimeSlotViewSettings(
+                      numberOfDaysInView: 3,
+                      dayFormat: 'E',
+                      timeTextStyle: AppTextStyle.regularBlack(fontSize: 12),
+                      startHour: 00,
+                      endHour: 24,
+                      timeFormat: 'h:mm a'),
+                  cellBorderColor: Colors.white,
+                  todayHighlightColor: AppColor.primaryColor,
+                  // showTodayButton: false,
+                  onDragEnd: (appointmentDragEndDetails) {
+                    'onDragEnd'.toString().logCustom();
+                    appointmentDragEndDetails.toString().logCustom();
+                  },
+                  viewNavigationMode: ViewNavigationMode.snap,
+                  todayTextStyle: AppTextStyle.mediumCustom(
+                      color: Colors.white, fontSize: 15),
+                  viewHeaderStyle: ViewHeaderStyle(
+                      backgroundColor: Colors.white,
+                      dayTextStyle: AppTextStyle.regularCustom(
+                          color: AppColor.grey121212.withOpacity(0.60),
+                          fontSize: 15),
+                      dateTextStyle: AppTextStyle.regularBlack(fontSize: 15)),
+                  weekNumberStyle: WeekNumberStyle(
+                      backgroundColor: Colors.white,
+                      textStyle: AppTextStyle.mediumCustom(
+                          color: AppColor.primaryColor, fontSize: 15)),
+                  allowViewNavigation: true,
+                  backgroundColor: Colors.white,
+                  onViewChanged: (viewChangedDetails) {
+                    if (viewChangedDetails.visibleDates[0]
+                        .isBefore(currentStart)) {
+                      currentStart = controller
+                          .getStartOfWeek(viewChangedDetails.visibleDates[0]);
+
+                      controller.weeklyData(
+                          endDate: currentEnd, startDate: currentStart);
+                    } else if (viewChangedDetails.visibleDates[2]
+                        .isAfter(currentEnd)) {
+                      currentEnd = controller
+                          .getEndOfWeek(viewChangedDetails.visibleDates[2]);
+
+                      controller.weeklyData(
+                          endDate: currentEnd, startDate: currentStart);
+                    }
+                  },
+                  dataSource: MeetingDataSource(controller.totalMeetings.value),
+                  view: CalendarView.day,
+                  monthViewSettings: const MonthViewSettings(
+                    monthCellStyle: MonthCellStyle(
+                      backgroundColor: Colors.white,
+                    ),
+                    appointmentDisplayMode:
+                        MonthAppointmentDisplayMode.appointment,
+                  ),
+                ),
+              )));
   }
 }
 
 class MeetingDataSource extends CalendarDataSource {
-  /// Creates a meeting data source, which used to set the appointment
-  /// collection to the calendar
   MeetingDataSource(List source) {
     appointments = source;
   }
@@ -138,8 +165,6 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
-/// Custom business object class which contains properties to hold the detailed
-/// information about the event data which will be rendered in calendar.
 class Meeting {
   /// Creates a meeting class with required details.
   Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);

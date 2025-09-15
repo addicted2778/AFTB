@@ -14,7 +14,7 @@ class EditProfileController extends GetxController {
 
   TextEditingController firstNController = TextEditingController();
   TextEditingController lastNController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  var emailController = TextEditingController().obs;
   TextEditingController phoneNController = TextEditingController();
   TextEditingController ePhoneNController = TextEditingController();
   TextEditingController dobController = TextEditingController();

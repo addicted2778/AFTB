@@ -65,57 +65,45 @@ class _CustomWebViewState extends State<CustomWebView> {
     var h = Get.height;
     var w = Get.width;
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
-      
-        body: Container(
-          margin: EdgeInsets.only(top: 30),
-          color: Colors.white,
-          child: 
-          Column(
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+          appbarTitle: widget.appBarTitle.tr,
+          isLeading: true,
+          onTap: () {
+            Get.back();
+          },
+        ),
+        body: Obx(
+          () => Container(
+            width: w,
+            height: h,
+            color: Colors.white,
+            child: Stack(
+              children: [
+                WebViewWidget(controller: controller),
+                if (customController.loadingPercentage.value < 100)
+                  Column(
+                    children: [
+                      LinearProgressIndicator(
+                        value: customController.loadingPercentage.value / 100.0,
+                        color: AppColor.primaryColor,
+                      )
+                    ],
+                  )
+              ],
+            ),
+            /*  child: Column(
             children: [
-               CustomAppBar(
-                appbarTitle: widget.appBarTitle.tr,
-                isLeading: true,
+              CustomAppBar(
+                appbarTitle: widget.appBarTitle,
                 onTap: () {
                   Get.back();
                 },
+                isLeading: true,
               ),
-              Expanded(
-                child: Obx(
-                  () => Container(
-                    width: w,
-                    height: h,
-                    color: Colors.white,
-                    child: Stack(
-                      children: [
-                        WebViewWidget(controller: controller),
-                        if (customController.loadingPercentage.value < 100)
-                          Column(
-                            children: [
-                              LinearProgressIndicator(
-                                value: customController.loadingPercentage.value / 100.0,
-                                color: AppColor.primaryColor,
-                              )
-                            ],
-                          )
-                      ],
-                    ),
-                    /*  child: Column(
-                    children: [
-                      CustomAppBar(
-                        appbarTitle: widget.appBarTitle,
-                        onTap: () {
-                          Get.back();
-                        },
-                        isLeading: true,
-                      ),
-                
-                    ],
-                  )*/
-                  ),
-                ),
-              ),
+
             ],
+          )*/
           ),
         ));
   }

@@ -10,23 +10,21 @@ import '../view/dashboard/weekly_plan/weekly_plan.dart';
 class WeeklyPlanController extends GetxController {
   RxBool isLoading = false.obs;
 
-  List<Meeting> totalMeetings = <Meeting>[];
+  RxList<Meeting> totalMeetings = <Meeting>[].obs;
   var model = DashboardModel().obs;
 
-  weeklyData() async {
-    DateTime today = DateTime.now();
-
-    DateTime startOfWeek = today.subtract(Duration(days: today.weekday % 7));
-    DateTime endOfWeek = startOfWeek.add(const Duration(days: 6));
-
-    isLoading.value = true;
+  weeklyData(
+      {required DateTime startDate,
+      required DateTime endDate,
+      bool isCallingFirstTime = false}) async {
+    isLoading.value = isCallingFirstTime;
 
     final response =
         await API.instance.post(endPoint: APIEndPoints.timetable, params: {
       "start_date":
-          "${startOfWeek.year}-${startOfWeek.month.toString().padLeft(2, '0')}-${startOfWeek.day.toString().padLeft(2, '0')}",
+          "${startDate.year}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
       "end_date":
-          "${endOfWeek.year}-${endOfWeek.month.toString().padLeft(2, '0')}-${endOfWeek.day.toString().padLeft(2, '0')}",
+          "${endDate.year}-${endDate.month.toString().padLeft(2, '0')}-${endDate.day.toString().padLeft(2, '0')}",
     });
 
     isLoading.value = false;
@@ -36,6 +34,7 @@ class WeeklyPlanController extends GetxController {
       final status = data['statusCode'];
       if (status == 1) {
         model.value = DashboardModel.fromJson(data);
+        totalMeetings.clear();
 
         for (int a = 0; a < model.value.data!.timetable!.length; a++) {
           for (int b = 0;
@@ -63,25 +62,26 @@ class WeeklyPlanController extends GetxController {
     }
   }
 
-  List<Meeting> _getDataSource() {
-    final List<Meeting> meetings = <Meeting>[];
-    final DateTime today = DateTime.now();
-    final DateTime startTime = DateTime(today.year, today.month, today.day, 14);
-    final DateTime endTime = startTime.add(const Duration(hours: 2));
-    'starttime _getSource'.toString().logCustom();
-    startTime.toString().logCustom();
+  DateTime getStartOfWeek(DateTime date) {
+    int dayOfWeek = date.weekday;
+    return date.subtract(Duration(days: dayOfWeek % 7)); // Sunday
+  }
 
-    meetings.add(
-      Meeting(
-          'Conferences', startTime, endTime, const Color(0xFF0F8644), false),
-    );
-    'today.year'.logCustom();
-    today.year.toString().logCustom();
-    'today.month'.logCustom();
-    today.month.toString().logCustom();
-    'today.day'.logCustom();
-    today.day.toString().logCustom();
+  DateTime getEndOfWeek(DateTime date) {
+    int dayOfWeek = date.weekday;
+    return date
+        .add(Duration(days: 7 - (dayOfWeek % 7)))
+        .subtract(const Duration(days: 1)); // Saturday
+  }
 
-    return meetings;
+  void onDateChanged(DateTime newDate) {
+    DateTime newStart = getStartOfWeek(newDate);
+    DateTime newEnd = getEndOfWeek(newDate);
+    //
+    // if (currentStart != newStart || currentEnd != newEnd) {
+    //   currentStart = newStart;
+    //   currentEnd = newEnd;
+    //   callApi(newStart, newEnd);
+    // }
   }
 }

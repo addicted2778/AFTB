@@ -24,51 +24,53 @@ class _DeleteAccountState extends State<DeleteAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primaryColor,
-      body: Container(
-        margin: EdgeInsets.only(top: 30),
-        color: Colors.white,
-        child: Column(
-          children: [
-            CustomAppBar(appbarTitle: 'Delete Account'),
-            Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  spacing(height: 10),
-                  Text(
-                    'Type a reason why you want to delete your accoun',
-                    style: AppTextStyle.regularCustom(
-                        fontSize: 16, color: AppColor.black1212OP60),
+      appBar: CustomAppBar(
+        appbarTitle: 'Delete Account',
+        onTap: () {
+          Get.back();
+        },
+        isLeading: true,
+      ),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                spacing(height: 10),
+                Text(
+                  'Type a reason why you want to delete your accoun',
+                  style: AppTextStyle.regularCustom(
+                      fontSize: 16, color: AppColor.black1212OP60),
+                ),
+                spacing(height: 20),
+                Form(
+                  key: reasonKey,
+                  child: AppTextFiled(
+                    hintText: 'Type here',
+                    maxlines: 8,
+                    controller: controller.reasonController,
+                    prefixIcon: Icon(Icons.email_outlined,
+                        color: AppColor.primaryColor),
+                    validator: (value) =>
+                        CustomValidations.validateString(value ?? ''),
                   ),
-                  spacing(height: 20),
-                  Form(
-                    key: reasonKey,
-                    child: AppTextFiled(
-                      hintText: 'Type here',
-                      maxlines: 8,
-                      controller: controller.reasonController,
-                      prefixIcon:
-                          Icon(Icons.email_outlined, color: AppColor.primaryColor),
-                      validator: (value) =>
-                          CustomValidations.validateString(value ?? ''),
-                    ),
-                  ),
-                  spacing(height: 20),
-                  FullWidthButton(
-                    buttonText: 'Delete Account',
-                    buttonTap: () {
-                      if (reasonKey.currentState!.validate()) {
-                        controller.deleteAccount();
-                      }
-                    },
-                    isLoading: controller.isLoading.value,
-                  )
-                ],
-              ),
+                ),
+                spacing(height: 20),
+                FullWidthButton(
+                  buttonText: 'Delete Account',
+                  buttonTap: () {
+                    if (reasonKey.currentState!.validate()) {
+                      controller.deleteAccount();
+                    }
+                  },
+                  isLoading: controller.isLoading.value,
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

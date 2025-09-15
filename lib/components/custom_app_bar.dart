@@ -25,8 +25,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // clipBehavior: Clip.none,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColor.primaryColor, // set status bar color
+        statusBarIconBrightness: Brightness.light, // icons: light or dark
+      ),
       backgroundColor: Colors.white,
+      scrolledUnderElevation: 0, // 👈 important
+      surfaceTintColor: Colors.transparent,
       leading: isLeading
           ? InkWell(
               onTap: () => Get.back(),
