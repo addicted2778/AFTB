@@ -26,33 +26,60 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
+      automaticallyImplyLeading: false,
+      titleSpacing: 0,
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: AppColor.primaryColor, // set status bar color
-        statusBarIconBrightness: Brightness.light, // icons: light or dark
+        statusBarColor: AppColor.primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark
       ),
       backgroundColor: Colors.white,
-      scrolledUnderElevation: 0, // 👈 important
+      scrolledUnderElevation: 0,
       surfaceTintColor: Colors.transparent,
+      flexibleSpace: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).padding.top,
+            color: AppColor.primaryColor, // Deep orange status bar background
+          ),
+          Expanded(child: Container(color: Colors.white)), // AppBar background
+        ],
+      ),
+      centerTitle: true,
       leading: isLeading
           ? InkWell(
-              onTap: () => Get.back(),
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: AppColor.primaryColor,
-                ),
-              ),
-            )
+        onTap: () => Get.back(),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(Icons.arrow_back, color: AppColor.primaryColor),
+        ),
+      )
           : null,
-      centerTitle: true,
       title: Text(
         appbarTitle ?? '',
         style: AppTextStyle.mediumCustom(
           color: AppColor.primaryColor,
           fontSize: 20,
         ),
-      ),
-    );
+      ),);
+      // leading: isLeading
+      //     ? InkWell(
+      //         onTap: () => Get.back(),
+      //         child: Padding(
+      //           padding: const EdgeInsets.all(8),
+      //           child: Icon(
+      //             Icons.arrow_back,
+      //             color: AppColor.primaryColor,
+      //           ),
+      //         ),
+      //       )
+      //     : null,
+      // centerTitle: true,
+      // title: Text(
+      //   appbarTitle ?? '',
+      //   style: AppTextStyle.mediumCustom(
+      //     color: AppColor.primaryColor,
+      //     fontSize: 20,
+      //   ),
   }
 }

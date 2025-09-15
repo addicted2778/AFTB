@@ -37,11 +37,7 @@ class _CustomWebViewState extends State<CustomWebView> {
             // Update loading bar.
           },
           onPageStarted: (String url) {
-            // if (url.contains('http://garansafe.kbdevs.com/success-url')) {
-            //   'successUrl'.logCustom();
-            // }
-            //
-            // url.toString().logCustom();
+
 
             customController.loadingPercentage.value = 0;
           },
@@ -62,8 +58,6 @@ class _CustomWebViewState extends State<CustomWebView> {
 
   @override
   Widget build(BuildContext context) {
-    var h = Get.height;
-    var w = Get.width;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: CustomAppBar(
@@ -74,36 +68,19 @@ class _CustomWebViewState extends State<CustomWebView> {
           },
         ),
         body: Obx(
-          () => Container(
-            width: w,
-            height: h,
-            color: Colors.white,
-            child: Stack(
-              children: [
-                WebViewWidget(controller: controller),
-                if (customController.loadingPercentage.value < 100)
-                  Column(
-                    children: [
-                      LinearProgressIndicator(
-                        value: customController.loadingPercentage.value / 100.0,
-                        color: AppColor.primaryColor,
-                      )
-                    ],
-                  )
-              ],
-            ),
-            /*  child: Column(
+          () => Stack(
             children: [
-              CustomAppBar(
-                appbarTitle: widget.appBarTitle,
-                onTap: () {
-                  Get.back();
-                },
-                isLeading: true,
-              ),
-
+              WebViewWidget(controller: controller),
+              if (customController.loadingPercentage.value < 100)
+                Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: customController.loadingPercentage.value / 100.0,
+                      color: AppColor.primaryColor,
+                    )
+                  ],
+                )
             ],
-          )*/
           ),
         ));
   }

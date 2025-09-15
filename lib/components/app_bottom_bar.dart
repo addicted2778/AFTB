@@ -46,151 +46,148 @@ class _AppBottomBarState extends State<AppBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: openPage(widget.selectedIndex),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
-        child: Container(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 5),
-          height: 68,
-          decoration: BoxDecoration(color: AppColor.lightPrimaryOP43),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  (widget.selectedIndex == 0)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                          child: iconBuilder(0),
+      bottomNavigationBar: Container(
+        padding: EdgeInsetsGeometry.only(left: 16,right: 16 ,bottom: 20),
+        height: 88,
+        decoration: BoxDecoration(color: AppColor.lightPrimaryOP43),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.selectedIndex == 0)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(0),
+                      ),
+                (widget.selectedIndex == 1)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(1),
+                      ),
+                (widget.selectedIndex == 2)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                        child: iconBuilder(2),
+                      ),
+              ],
+            ),
+            /*Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.selectedIndex == 0)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(0),
+                ),
+                (widget.selectedIndex == 1)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(1),
+                ),
+                (widget.selectedIndex == 2)
+                    ? Expanded(child: SizedBox())
+                    : Expanded(
+                  child: iconBuilder(2),
+                ),
+              ],
+            ),*/
+            if (widget.selectedIndex == 0)
+              Positioned(
+                  top: -35,
+                  left: 20,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
                         ),
-                  (widget.selectedIndex == 1)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                          child: iconBuilder(1),
-                        ),
-                  (widget.selectedIndex == 2)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                          child: iconBuilder(2),
-                        ),
-                ],
-              ),
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  (widget.selectedIndex == 0)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                    child: iconBuilder(0),
-                  ),
-                  (widget.selectedIndex == 1)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                    child: iconBuilder(1),
-                  ),
-                  (widget.selectedIndex == 2)
-                      ? Expanded(child: SizedBox())
-                      : Expanded(
-                    child: iconBuilder(2),
-                  ),
-                ],
-              ),*/
-              if (widget.selectedIndex == 0)
-                Positioned(
-                    top: -35,
-                    left: 20,
+                    height: 80,
+                    width: 80,
                     child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: AppColor.lightPrimary, width: 5)
-                          // borderRadius: BorderRadius.circular(100)
-                          ),
+                      alignment: Alignment.center,
                       height: 80,
                       width: 80,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          shape: BoxShape.circle,
-                          // borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: const Icon(
-                          Icons.calendar_month_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                    )),
-              if (widget.selectedIndex == 1)
-                Positioned(
-                    top: -35,
-                    right: 0,
-                    left: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: AppColor.lightPrimary, width: 5)
-                          // borderRadius: BorderRadius.circular(100)
-                          ),
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: const Icon(
+                        Icons.calendar_month_outlined,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  )),
+            if (widget.selectedIndex == 1)
+              Positioned(
+                  top: -35,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
+                        ),
+                    height: 80,
+                    width: 80,
+                    child: Container(
+                      alignment: Alignment.center,
                       height: 80,
                       width: 80,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          shape: BoxShape.circle,
-                          // borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: const Icon(
-                          Icons.home,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                    )),
-              if (widget.selectedIndex == 2)
-                Positioned(
-                    top: -35,
-                    right: 20,
-                    child: Container(
-                      padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: AppColor.lightPrimary, width: 5)
-                          // borderRadius: BorderRadius.circular(100)
-                          ),
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: const Icon(
+                        Icons.home,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  )),
+            if (widget.selectedIndex == 2)
+              Positioned(
+                  top: -35,
+                  right: 20,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColor.lightPrimary, width: 5)
+                        // borderRadius: BorderRadius.circular(100)
+                        ),
+                    height: 80,
+                    width: 80,
+                    child: Container(
+                      alignment: Alignment.center,
                       height: 80,
                       width: 80,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          shape: BoxShape.circle,
-                          // borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 28,
-                        ),
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryColor,
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(100)
                       ),
-                    )),
-            ],
-          ),
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  )),
+          ],
         ),
       ),
     );

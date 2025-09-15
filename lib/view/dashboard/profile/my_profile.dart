@@ -290,7 +290,7 @@ class _MyProfileState extends State<MyProfile> {
                   },
                 ),
               ),
-              spacing(height: 20)
+              spacing(height: 30)
             ],
           ),
         ),
