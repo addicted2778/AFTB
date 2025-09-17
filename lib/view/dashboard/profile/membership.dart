@@ -3,6 +3,7 @@ import 'package:atfb/components/custom_app_bar.dart';
 import 'package:atfb/utils/global.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/membership_controller.dart';
 import '../../../export_files/export_files_must.dart';
 
 class Membership extends StatefulWidget {
@@ -13,6 +14,18 @@ class Membership extends StatefulWidget {
 }
 
 class _MembershipState extends State<Membership> {
+  MembershipController controller = Get.put(MembershipController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (_) => controller.getMemberShipDetails(),
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +34,8 @@ class _MembershipState extends State<Membership> {
         isLeading: true,
       ),
       backgroundColor: Colors.white,
-      body: Expanded(
-          child: SingleChildScrollView(
-              child: Padding(
+      body: SingleChildScrollView(
+          child: Padding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
         child: Column(
           children: [
@@ -106,7 +118,7 @@ class _MembershipState extends State<Membership> {
             FullWidthButton(buttonText: 'Upgrade Now')
           ],
         ),
-      ))),
+      )),
     );
   }
 }

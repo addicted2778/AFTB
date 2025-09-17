@@ -33,6 +33,7 @@ class NewPasswordController extends GetxController {
 
       if (status == 1) {
         Get.offAllNamed(PageNames.loginScreen);
+        data['message'].toString().showSnackBar();
       } else {
         data['message'].toString().showSnackBar();
       }

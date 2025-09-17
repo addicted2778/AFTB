@@ -56,8 +56,43 @@ class _WeeklyPlanState extends State<WeeklyPlan> {
               )
             : Obx(
                 () => SfCalendar(
+                  onTap: (CalendarTapDetails calendarTapDetails) {
+                    if (calendarTapDetails.appointments != null) {
+                      int onTapIndex = 0;
+
+                      final onTapMeeting =
+                          calendarTapDetails.appointments![0] as Meeting;
+
+                      for (int a = 0;
+                          a < controller.model.value.data!.timetable!.length;
+                          a++) {
+                        for (int b = 0;
+                            b <
+                                controller.model.value.data!.timetable![a].data!
+                                    .length;
+                            b++) {
+                          controller.model.value.data!.timetable![a].data![b]
+                              .startTime!
+                              .toString()
+                              .logCustom();
+                          if (onTapMeeting.from.toString() ==
+                              controller.model.value.data!.timetable![a]
+                                  .data![b].startTime!
+                                  .toString()) {
+                            onTapIndex = b;
+                            // break;
+                          }
+                        }
+                      }
+
+                      onTapIndex.toString().logCustom();
+                      calendarTapDetails.date.toString().logCustom();
+                      onTapMeeting.from.toString().logCustom();
+                      onTapMeeting.to.toString().logCustom();
+                    }
+                  },
                   viewHeaderHeight: 80,
-                  showCurrentTimeIndicator: false,
+                  showCurrentTimeIndicator: true,
                   scheduleViewSettings: ScheduleViewSettings(
                     monthHeaderSettings: MonthHeaderSettings(
                       backgroundColor: Colors.white,
@@ -67,17 +102,16 @@ class _WeeklyPlanState extends State<WeeklyPlan> {
                   timeSlotViewSettings: TimeSlotViewSettings(
                       numberOfDaysInView: 3,
                       dayFormat: 'E',
+                      timeIntervalWidth: 80,
+                      timeRulerSize: 60,
+                      timeIntervalHeight: 50,
                       timeTextStyle: AppTextStyle.regularBlack(fontSize: 12),
                       startHour: 00,
                       endHour: 24,
                       timeFormat: 'h:mm a'),
                   cellBorderColor: Colors.white,
-                  todayHighlightColor: AppColor.primaryColor,
-                  // showTodayButton: false,
-                  onDragEnd: (appointmentDragEndDetails) {
-                    'onDragEnd'.toString().logCustom();
-                    appointmentDragEndDetails.toString().logCustom();
-                  },
+                  todayHighlightColor:
+                      AppColor.primaryColor, // showTodayButton: false,
                   viewNavigationMode: ViewNavigationMode.snap,
                   todayTextStyle: AppTextStyle.mediumCustom(
                       color: Colors.white, fontSize: 15),

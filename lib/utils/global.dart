@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 spacing({double height = 0.0, double width = 0.0}) {
   return SizedBox(
@@ -132,6 +133,15 @@ extension StringCustom on String {
     Get.closeAllSnackbars();
     return Get.snackbar('Alert', this,
         backgroundColor: AppColor.primaryColor, colorText: Colors.white);
+  }
+
+  formatTime() {
+    DateTime dateTime = DateFormat("HH:mm:ss").parse(this);
+
+    // Format into 12-hour with AM/PM
+    String formattedTime = DateFormat("h:mm a").format(dateTime);
+
+    return formattedTime;
   }
 }
 

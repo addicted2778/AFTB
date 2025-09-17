@@ -430,5 +430,6 @@ class APIEndPoints {
   static const timetable = 'timetable';
   static const siteSetting = 'site-setting';
   static const updateProfile = 'update-profile';
+  static const membershipDetail = 'membership-detail';
   static const logout = 'logout';
 }

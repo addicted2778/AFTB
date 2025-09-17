@@ -6,6 +6,7 @@ import 'package:atfb/components/custom_app_bar.dart';
 import 'package:atfb/controller/edit_profile_controller.dart';
 import 'package:atfb/utils/global.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -71,15 +72,11 @@ class _MyProfileState extends State<MyProfile> {
               spacing(height: 20),
               Obx(
                 () => Center(
-                  child: Container(
-                    // margin: EdgeInsets.only(right: 30),
-                    width: 110,
-                    height: 110,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: AppColor.primaryColor, width: 3),
-                        shape: BoxShape.circle),
+                  child: DottedBorder(
+                    borderType: BorderType.Circle,
+                    color: AppColor.primaryColor,
+                    dashPattern: [6, 3],
+                    padding: const EdgeInsets.all(4),
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
@@ -106,8 +103,8 @@ class _MyProfileState extends State<MyProfile> {
                                     width: 110,
                                     File(controller.imagePath.value))),
                         Positioned(
-                            right: -5,
-                            bottom: -2,
+                            right: 0,
+                            bottom: 0,
                             child: InkWell(
                               onTap: () async {
                                 await uploadBottomSheet(

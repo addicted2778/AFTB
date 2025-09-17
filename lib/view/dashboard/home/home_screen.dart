@@ -24,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        controller.siteSetting();
+      (_) async {
+        await controller.siteSetting();
         controller.dashBoard();
       },
     );
@@ -37,10 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
         DateFormat('EEEE, d MMMM yyyy').format(DateTime.now());
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppBar(appbarTitle: 'Today’s Activities',isLeading: false,),
+        appBar: CustomAppBar(
+          appbarTitle: 'Today’s Activities',
+          isLeading: false,
+        ),
         body: Column(
           children: [
-
             Text(
               formattedDate,
               style: AppTextStyle.mediumBlack(fontSize: 20),
@@ -101,8 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                           color: AppColor.hex(
                                               data.activity!.colorCode!),
-                                          borderRadius:
-                                              const BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(12),
                                             topRight: Radius.circular(12),
                                           ),
@@ -115,10 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 12, top: 12),
+                                        padding:
+                                            EdgeInsets.only(left: 12, top: 12),
                                         child: Text(
-                                          "10:00 AM – 11:00 AM",
+                                          "${data.startTime.toString().formatTime()}-${data.endTime.toString().formatTime()}",
                                           style: AppTextStyle.regularBlack(
                                             fontSize: 15,
                                           ),
@@ -152,8 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () => Get.toNamed(PageNames.viewFullDay),
                   child: Container(
                     alignment: Alignment.center,
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                     decoration: BoxDecoration(
                         color: AppColor.primaryColor,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            spacing(height: 35)
+            spacing(height: 40)
           ],
         ));
   }

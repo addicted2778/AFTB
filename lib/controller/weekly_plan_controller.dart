@@ -35,7 +35,6 @@ class WeeklyPlanController extends GetxController {
       if (status == 1) {
         model.value = DashboardModel.fromJson(data);
         totalMeetings.clear();
-
         for (int a = 0; a < model.value.data!.timetable!.length; a++) {
           for (int b = 0;
               b < model.value.data!.timetable![a].data!.length;
