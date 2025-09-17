@@ -42,7 +42,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: MediaQuery.of(context).padding.top,
             color: AppColor.primaryColor, // Deep orange status bar background
           ),
-          Expanded(child: Container(color: Colors.white)), // AppBar background
+          Expanded(child: Container(color: Colors.white)),
         ],
       ),
       centerTitle: true,

@@ -21,6 +21,7 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(appbarTitle: '',isLeading: false,),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -33,6 +34,7 @@ class _IntroScreenState extends State<IntroScreen> {
             scrollDirection: Axis.horizontal,
             reverse: false,
             itemBuilder: (context, index) => Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 6,
@@ -43,7 +45,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     width: Get.width,
                     child: Image.asset(
                       width: Get.width * 0.80,
-                      height: Get.height * 0.40,
+                      height: Get.height * 0.45,
                       list[index],
                     ),
                   ),
