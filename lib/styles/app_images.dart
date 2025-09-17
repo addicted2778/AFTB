@@ -8,4 +8,5 @@ class AppImages {
   static const String privacyPolicy = 'assets/images/privacyPolicy.png';
   static const String dndIcon = 'assets/images/dndIcon.png';
   static const String noAds = 'assets/images/noAds.png';
+  static const String deleteMyAccount = 'assets/images/deleteMyAccount.png';
 }

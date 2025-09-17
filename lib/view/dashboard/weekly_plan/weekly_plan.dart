@@ -85,6 +85,7 @@ class _WeeklyPlanState extends State<WeeklyPlan> {
                         }
                       }
 
+                      'ONTAPINDEX'.logCustom();
                       onTapIndex.toString().logCustom();
                       calendarTapDetails.date.toString().logCustom();
                       onTapMeeting.from.toString().logCustom();

@@ -115,24 +115,101 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             spacing(height: 20),
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 14),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Profile & Security',
+                  style: AppTextStyle.semiBoldPrimary(fontSize: 16),
+                ),
+              ),
+            ),
+            spacing(height: 10),
+            Divider(
+              color: AppColor.primaryColor.withOpacity(0.34),
+              height: 1,
+            ),
             commmonContainer(
                 titleImage: AppImages.profile,
                 titleText: 'My Profile',
                 onTap: () {
                   Get.toNamed(PageNames.myProfile);
                 }),
+            Divider(
+              color: AppColor.primaryColor.withOpacity(0.34),
+              height: 1,
+            ),
             commmonContainer(
                 titleImage: AppImages.changePassword,
                 titleText: 'Change Password',
                 onTap: () {
                   Get.toNamed(PageNames.changePassword);
                 }),
-            commmonContainer(
-                titleImage: AppImages.membership,
-                titleText: 'Membership',
-                onTap: () {
-                  Get.toNamed(PageNames.membership);
-                }),
+            // commmonContainer(
+            //     titleImage: AppImages.membership,
+            //     titleText: 'Membership',
+            //     onTap: () {
+            //       Get.toNamed(PageNames.membership);
+            //     }),
+
+            spacing(height: 10),
+
+            InkWell(
+              onTap: () {
+                Get.toNamed(PageNames.membership);
+              },
+              child: Container(
+                  width: Get.width,
+                  // height: 80,
+                  padding: EdgeInsetsGeometry.symmetric(
+                      horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(color: AppColor.primaryColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppImages.membership,
+                        height: 60,
+                        width: 60,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'My Membership',
+                            // textAlign: TextAlign.center,
+                            style: AppTextStyle.semiBoldWhite(fontSize: 16),
+                          ),
+                          Text(
+                            'Mange your membership here',
+                            style: AppTextStyle.regularWhite(fontSize: 12),
+                          )
+                        ],
+                      )
+                    ],
+                  )),
+            ),
+
+            spacing(height: 10),
+
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 14),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Legal & Policy Information',
+                  style: AppTextStyle.semiBoldPrimary(fontSize: 16),
+                ),
+              ),
+            ),
+            spacing(height: 10),
+            Divider(
+              color: AppColor.primaryColor.withOpacity(0.34),
+              height: 1,
+            ),
             commmonContainer(
                 titleImage: AppImages.privacyPolicy,
                 titleText: 'Privacy Policy',
@@ -145,6 +222,10 @@ class _ProfileState extends State<Profile> {
                       transition: Transition.cupertino,
                       duration: Duration(milliseconds: 600));
                 }),
+            Divider(
+              color: AppColor.primaryColor.withOpacity(0.34),
+              height: 1,
+            ),
             commmonContainer(
                 titleImage: AppImages.termsAndCondition,
                 titleText: 'T&C',
@@ -157,6 +238,22 @@ class _ProfileState extends State<Profile> {
                       transition: Transition.cupertino,
                       duration: Duration(milliseconds: 600));
                 }),
+            spacing(height: 10),
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 14),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Manage Account',
+                  style: AppTextStyle.semiBoldPrimary(fontSize: 16),
+                ),
+              ),
+            ),
+            spacing(height: 10),
+            Divider(
+              color: AppColor.primaryColor.withOpacity(0.34),
+              height: 1,
+            ),
             commmonContainer(
                 titleImage: AppImages.changePassword,
                 titleText: 'Logout',
@@ -175,21 +272,17 @@ class _ProfileState extends State<Profile> {
               color: AppColor.primaryColor.withOpacity(0.34),
               height: 1,
             ),
-            spacing(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () => Get.toNamed(PageNames.deleteAccount),
-                  child: Text(
-                    'Delete My Account',
-                    style: AppTextStyle.mediumCustom(
-                        fontSize: 12, color: Colors.red),
-                  ),
-                ),
-              ),
-            ),
+            commmonContainer(
+                titleImage: AppImages.deleteMyAccount,
+                titleText: 'Delete My Account',
+                onTap: () {
+                  Get.toNamed(PageNames.deleteAccount);
+                }),
+            // Divider(
+            //   color: AppColor.primaryColor.withOpacity(0.34),
+            //   height: 1,
+            // ),
+            // spacing(height: 20),
             spacing(height: 40),
           ],
         ),
@@ -204,23 +297,24 @@ class _ProfileState extends State<Profile> {
       InkWell(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          /*decoration: BoxDecoration(
               border: Border(
                   top: BorderSide(
-                      color: AppColor.primaryColor.withOpacity(0.34)))),
+                      color: AppColor.primaryColor.withOpacity(0.34)))),*/
           child: Row(
             children: [
               Image.asset(
                 titleImage,
                 height: 26,
                 width: 26,
+                color: AppColor.primaryColor,
               ),
               spacing(width: 16),
               Expanded(
                 child: Text(
                   titleText,
-                  style: AppTextStyle.regularBlack(fontSize: 19),
+                  style: AppTextStyle.regularBlack(fontSize: 16),
                 ),
               )
             ],
