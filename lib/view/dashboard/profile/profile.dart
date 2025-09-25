@@ -43,25 +43,32 @@ class _ProfileState extends State<Profile> {
                     dashPattern: [6, 3], // dotted effect
                     padding: const EdgeInsets.all(4),
                     child: ClipOval(
-                      child: (siteSettingData.value.profile!.profilePhoto ==
-                              null)
+                      child: (siteSettingData.value.profile == null)
                           ? Image.asset(
                               height: 100,
                               width: 100,
                               AppImages.profile,
                               fit: BoxFit.cover,
                             )
-                          : CachedNetworkImage(
-                              progressIndicatorBuilder:
-                                  (context, url, progress) =>
-                                      CircularProgressIndicator(
-                                        color: AppColor.primaryColor,
-                                      ),
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                              imageUrl:
-                                  siteSettingData.value.profile!.profilePhoto!),
+                          : (siteSettingData.value.profile!.profilePhoto ==
+                                  null)
+                              ? Image.asset(
+                                  height: 100,
+                                  width: 100,
+                                  AppImages.profile,
+                                  fit: BoxFit.cover,
+                                )
+                              : CachedNetworkImage(
+                                  progressIndicatorBuilder:
+                                      (context, url, progress) =>
+                                          CircularProgressIndicator(
+                                            color: AppColor.primaryColor,
+                                          ),
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  imageUrl: siteSettingData
+                                      .value.profile!.profilePhoto!),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -98,12 +105,16 @@ class _ProfileState extends State<Profile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        siteSettingData.value.profile!.firstName!,
+                        (siteSettingData.value.profile == null)
+                            ? ' '
+                            : siteSettingData.value.profile!.firstName! ?? '',
                         style: AppTextStyle.mediumCustom(
                             fontSize: 19, color: AppColor.primaryColor),
                       ),
                       Text(
-                        siteSettingData.value.profile!.patientId!,
+                        (siteSettingData.value.profile == null)
+                            ? ' '
+                            : siteSettingData.value.profile!.patientId! ?? '',
                         style: AppTextStyle.regularCustom(
                           color: AppColor.grey808080,
                           fontSize: 14,

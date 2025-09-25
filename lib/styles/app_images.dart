@@ -9,4 +9,5 @@ class AppImages {
   static const String dndIcon = 'assets/images/dndIcon.png';
   static const String noAds = 'assets/images/noAds.png';
   static const String deleteMyAccount = 'assets/images/deleteMyAccount.png';
+  static const String live = 'assets/images/live.png';
 }

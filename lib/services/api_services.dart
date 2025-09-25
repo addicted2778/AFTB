@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:atfb/routes/page_names.dart';
 import 'package:atfb/utils/preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -116,7 +117,7 @@ class API {
 
       final data = json.decode(response.body);
 
-      final status = data['status'];
+      final status = data['statusCode'];
 
       if (status == 2) {
         SharedPreferences sharedPreferences =
@@ -126,7 +127,7 @@ class API {
         deviceUniqueId();
         deviceModelName();
         appVersion();
-        Get.offAll(LoginScreen());
+        Get.offAllNamed(PageNames.loginScreen);
       }
 
       return response;
@@ -428,6 +429,7 @@ class APIEndPoints {
   static const deleteAccount = 'delete-account';
   static const updatePassword = 'update-password';
   static const timetable = 'timetable';
+  static const timetableDetails = 'time-table-details';
   static const siteSetting = 'site-setting';
   static const updateProfile = 'update-profile';
   static const membershipDetail = 'membership-detail';

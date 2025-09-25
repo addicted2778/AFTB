@@ -5,13 +5,17 @@ import 'package:atfb/model/dashboard_model.dart';
 import 'package:atfb/utils/global.dart';
 import 'package:get/get.dart';
 
+import '../model/time_table_detail_model.dart';
 import '../view/dashboard/weekly_plan/weekly_plan.dart';
 
 class WeeklyPlanController extends GetxController {
   RxBool isLoading = false.obs;
+  RxBool isLoadingDetail = false.obs;
+  RxBool isShowMembers = false.obs;
 
   RxList<Meeting> totalMeetings = <Meeting>[].obs;
   var model = DashboardModel().obs;
+  var timeTableDetailModel = TimeTableDetailModel().obs;
 
   weeklyData(
       {required DateTime startDate,
@@ -82,5 +86,64 @@ class WeeklyPlanController extends GetxController {
     //   currentEnd = newEnd;
     //   callApi(newStart, newEnd);
     // }
+  }
+
+  Future<bool> timeTableDetail({
+    required String timeTableId,
+    required String date,
+    required String startTime,
+    required String endTime,
+  }) async {
+    showLoadingDialog();
+
+    final response = await API.instance
+        .post(endPoint: APIEndPoints.timetableDetails, params: {
+      "time_table_id": timeTableId,
+      "date": date,
+      "start_time": startTime,
+      "end_time": endTime,
+      // "time_table_id": '143',
+      // "date": "2025-09-25",
+      // "start_time": "11:00:00",
+      // "end_time": "12:30:00",
+    });
+
+    // isLoadingDetail.value = false;
+    hideLoadingDialog();
+
+    try {
+      final data = jsonDecode(response.body);
+      final statusCode = data['statusCode'];
+
+      if (statusCode == 1) {
+        timeTableDetailModel.value = TimeTableDetailModel.fromJson(data);
+        return true;
+      } else {
+        data['message'].toString().showSnackBar();
+        return false;
+      }
+    } catch (e, stackTrace) {
+      e.toString().logCustom();
+      stackTrace.toString().logCustom();
+      return false;
+    }
+  }
+
+  void showLoadingDialog() {
+    Get.dialog(
+      Center(
+        child: CircularProgressIndicator(
+          color: AppColor.primaryColor,
+        ),
+      ),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+    );
+  }
+
+  void hideLoadingDialog() {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
+    }
   }
 }

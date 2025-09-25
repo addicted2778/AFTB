@@ -4,7 +4,9 @@ import 'package:atfb/utils/global.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../export_files/export_files_must.dart';
 import '../model/dashboard_model.dart';
+import '../model/time_table_detail_model.dart';
 import '../services/api_services.dart';
 
 class ViewFullDayController extends GetxController {
@@ -13,6 +15,7 @@ class ViewFullDayController extends GetxController {
   RxInt toScrollIndex = 0.obs;
 
   var dashboardModel = DashboardModel().obs;
+  var timeTableDetailModel = TimeTableDetailModel().obs;
 
   Future<bool> dashBoard() async {
     isLoading.value = true;
@@ -55,7 +58,7 @@ class ViewFullDayController extends GetxController {
                       .first
                       .toString() ==
                   now.hour.toString()) {
-            if (a > 2) {
+            if (a > 4) {
               toScrollIndex.value = a - 2;
             } else {
               toScrollIndex.value = a;
@@ -73,6 +76,60 @@ class ViewFullDayController extends GetxController {
       e.toString().logCustom();
       stackTrace.toString().logCustom();
       return false;
+    }
+  }
+
+  Future<bool> timeTableDetail({
+    required String timeTableId,
+    required String startTime,
+    required String endTime,
+  }) async {
+    showLoadingDialog();
+
+    final response = await API.instance
+        .post(endPoint: APIEndPoints.timetableDetails, params: {
+      "time_table_id": timeTableId,
+      "date": DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+      "start_time": startTime,
+      "end_time": endTime,
+    });
+
+    // isLoadingDetail.value = false;
+    hideLoadingDialog();
+
+    try {
+      final data = jsonDecode(response.body);
+      final statusCode = data['statusCode'];
+
+      if (statusCode == 1) {
+        timeTableDetailModel.value = TimeTableDetailModel.fromJson(data);
+        return true;
+      } else {
+        data['message'].toString().showSnackBar();
+        return false;
+      }
+    } catch (e, stackTrace) {
+      e.toString().logCustom();
+      stackTrace.toString().logCustom();
+      return false;
+    }
+  }
+
+  void showLoadingDialog() {
+    Get.dialog(
+      Center(
+        child: CircularProgressIndicator(
+          color: AppColor.primaryColor,
+        ),
+      ),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+    );
+  }
+
+  void hideLoadingDialog() {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
     }
   }
 }

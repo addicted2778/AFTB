@@ -12,6 +12,7 @@ class AppColor {
   static final Color grey808080 = hex('#808080');
   static final Color black2E2A2A = hex('#2E2A2A');
   static final Color grey747775 = hex('#747775');
+  static final Color blue64B5F6 = hex('#64B5F6');
   static final Color greyAEACAC = hex('#AEACAC');
   static final Color grey8C8C8C = hex('#8C8C8C');
   static final Color green34A853 = hex('#34A853');

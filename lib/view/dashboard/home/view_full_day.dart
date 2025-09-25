@@ -1,4 +1,5 @@
 import 'package:atfb/components/custom_app_bar.dart';
+import 'package:atfb/model/dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +7,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Styles/app_colors.dart';
 import '../../../controller/ViewFullDayController.dart';
+import '../../../model/time_table_detail_model.dart';
+import '../../../styles/app_images.dart';
 import '../../../styles/app_textstyle.dart';
 import '../../../utils/global.dart';
 
@@ -30,7 +33,7 @@ class _ViewFullDayState extends State<ViewFullDay> {
   loadInitData() async {
     bool isApiDataLoad = await controller.dashBoard();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+/*    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (isApiDataLoad) {
         if (itemScrollController.isAttached) {
           itemScrollController.scrollTo(
@@ -40,7 +43,7 @@ class _ViewFullDayState extends State<ViewFullDay> {
           );
         }
       }
-    });
+    });*/
   }
 
   @override
@@ -85,7 +88,7 @@ class _ViewFullDayState extends State<ViewFullDay> {
                   )
                 : Container(
                     color: Colors.white,
-                    padding: EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: ScrollablePositionedList.separated(
                       itemScrollController: itemScrollController,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -131,11 +134,100 @@ class _ViewFullDayState extends State<ViewFullDay> {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 12, top: 12),
-                                child: Text(
-                                  "${data.startTime.toString().formatTime()}-${data.endTime.toString().formatTime()}",
-                                  style: AppTextStyle.regularBlack(
-                                    fontSize: 15,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${data.startTime.toString().formatTime()}-${data.endTime.toString().formatTime()}",
+                                      style: AppTextStyle.regularBlack(
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    if (data.type.toString() == 'group_session')
+                                      InkWell(
+                                        onTap: () async {
+                                          bool isData =
+                                              await controller.timeTableDetail(
+                                                  timeTableId:
+                                                      data.id!.toString(),
+                                                  startTime:
+                                                      data.activity!.startTime!,
+                                                  endTime:
+                                                      data.activity!.endTime!);
+
+                                          if (isData) {
+                                            showEventBottomSheet(context,
+                                                timeTableDetail: controller
+                                                    .timeTableDetailModel
+                                                    .value
+                                                    .data!
+                                                    .timeTableDetail!);
+                                          }
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            // Avatars
+                                            ...data.activity!.members!
+                                                .take(2)
+                                                .toList()
+                                                .asMap()
+                                                .entries
+                                                .map((entry) {
+                                              int index = entry.key;
+                                              String url =
+                                                  entry.value.profilePhoto ??
+                                                      AppImages.profile;
+
+                                              return Transform.translate(
+                                                offset: Offset(-20.0 * index,
+                                                    0), // overlap
+                                                child: CircleAvatar(
+                                                  radius: 18,
+                                                  backgroundColor:
+                                                      Colors.orange,
+                                                  child: CircleAvatar(
+                                                    radius: 18,
+                                                    backgroundImage:
+                                                        NetworkImage(url),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+
+                                            // Counter Circle
+                                            // Counter Circle (only if more remain)
+                                            if (data.activity!.members!.length >
+                                                0)
+                                              Transform.translate(
+                                                offset:
+                                                    const Offset(-20 * 3, 0),
+                                                child: CircleAvatar(
+                                                  radius: 18,
+                                                  backgroundColor:
+                                                      AppColor.primaryColor,
+                                                  child: CircleAvatar(
+                                                    radius: 18 - 2,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    child: Text(
+                                                      "+${data.activity!.members!.length - 2}",
+                                                      style: TextStyle(
+                                                        color: AppColor
+                                                            .primaryColor,
+                                                        fontSize: 18 / 2.2,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                               Padding(
@@ -156,5 +248,167 @@ class _ViewFullDayState extends State<ViewFullDay> {
                   ),
       ),
     );
+  }
+
+  void showEventBottomSheet(
+    BuildContext context, {
+    required TimeTableDetail timeTableDetail,
+  }) {
+    bool isGroupSession =
+        (timeTableDetail.type == 'group_session') ? true : false;
+
+    showModalBottomSheet(
+        useSafeArea: true,
+        elevation: 0,
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (context) => StatefulBuilder(
+              builder: (context, setStateState) => ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height *
+                      0.7, // max 70% of screen
+                ),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: Get.width,
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 20, left: 20),
+                        decoration: BoxDecoration(
+                            color: (isGroupSession)
+                                ? AppColor.hex(
+                                    timeTableDetail.groupSession!.colorCode!)
+                                : AppColor.hex(
+                                    timeTableDetail.activity!.colorCode!),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              (isGroupSession)
+                                  ? timeTableDetail.groupSession!.name!
+                                  : timeTableDetail.activity!.name!,
+                              style: AppTextStyle.regularBlack(
+                                fontSize: 16,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // Avatars
+                                ...timeTableDetail.groupSession!.members!
+                                    .take(2)
+                                    .toList()
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  int index = entry.key;
+                                  String url = entry.value.profilePhoto ??
+                                      AppImages.profile;
+
+                                  return Transform.translate(
+                                    offset: Offset(-20.0 * index, 0), // overlap
+                                    child: CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: Colors.orange,
+                                      child: CircleAvatar(
+                                        radius: 18,
+                                        backgroundImage: NetworkImage(url),
+                                      ),
+                                    ),
+                                  );
+                                }),
+
+                                // Counter Circle
+                                // Counter Circle (only if more remain)
+                                if (timeTableDetail
+                                        .groupSession!.members!.length >
+                                    0)
+                                  Transform.translate(
+                                    offset: Offset(-20 * 3, 0),
+                                    child: CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: AppColor.primaryColor,
+                                      child: CircleAvatar(
+                                        radius: 18 - 2,
+                                        backgroundColor: Colors.white,
+                                        child: Text(
+                                          "+${timeTableDetail.groupSession!.members!.length - 2}",
+                                          style: TextStyle(
+                                            color: AppColor.primaryColor,
+                                            fontSize: 18 / 2.2,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                          child: GridView.builder(
+                              padding: const EdgeInsets.all(12),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, // 2 columns
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: 0.85,
+                              ),
+                              itemCount:
+                                  timeTableDetail.groupSession!.members!.length,
+                              itemBuilder: (context, index) {
+                                final member = timeTableDetail
+                                    .groupSession!.members![index];
+                                return Stack(children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Expanded(
+                                          child: Image.network(
+                                            member.profilePhoto ??
+                                                'https://picsum.photos/200',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.all(6),
+                                          color: Colors.orange,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            member.firstName! ?? '',
+                                            style: AppTextStyle.mediumWhite(
+                                                fontSize: 12),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]);
+                              })),
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }

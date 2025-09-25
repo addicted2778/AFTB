@@ -1,11 +1,11 @@
-class DashboardModel {
+class TimeTableDetailModel {
   int? statusCode;
   Data? data;
   String? message;
 
-  DashboardModel({this.statusCode, this.data, this.message});
+  TimeTableDetailModel({this.statusCode, this.data, this.message});
 
-  DashboardModel.fromJson(Map<String, dynamic> json) {
+  TimeTableDetailModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
@@ -23,104 +23,78 @@ class DashboardModel {
 }
 
 class Data {
-  List<Timetable>? timetable;
+  TimeTableDetail? timeTableDetail;
 
-  Data({this.timetable});
+  Data({this.timeTableDetail});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['timetable'] != null) {
-      timetable = <Timetable>[];
-      json['timetable'].forEach((v) {
-        timetable!.add(new Timetable.fromJson(v));
-      });
-    }
+    timeTableDetail = json['time_table_detail'] != null
+        ? new TimeTableDetail.fromJson(json['time_table_detail'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.timetable != null) {
-      data['timetable'] = this.timetable!.map((v) => v.toJson()).toList();
+    if (this.timeTableDetail != null) {
+      data['time_table_detail'] = this.timeTableDetail!.toJson();
     }
     return data;
   }
 }
 
-class Timetable {
-  String? date;
-  List<PerTimeTable>? data;
-
-  Timetable({this.date, this.data});
-
-  Timetable.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
-    if (json['data'] != null) {
-      data = <PerTimeTable>[];
-      json['data'].forEach((v) {
-        data!.add(new PerTimeTable.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class PerTimeTable {
+class TimeTableDetail {
   int? id;
-  int? userId;
   String? type;
   int? referenceId;
   String? date;
   String? startTime;
   String? endTime;
+  GroupSession? groupSession;
   Activity? activity;
 
-  PerTimeTable(
+  TimeTableDetail(
       {this.id,
-      this.userId,
       this.type,
       this.referenceId,
       this.date,
       this.startTime,
       this.endTime,
-      this.activity});
+      this.groupSession});
 
-  PerTimeTable.fromJson(Map<String, dynamic> json) {
+  TimeTableDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userId = json['user_id'];
     type = json['type'];
     referenceId = json['reference_id'];
     date = json['date'];
     startTime = json['start_time'];
     endTime = json['end_time'];
-    activity = json['activity_group_session'] != null
-        ? Activity.fromJson(json['activity_group_session'])
+    groupSession = json['group_session'] != null
+        ? new GroupSession.fromJson(json['group_session'])
+        : null;
+    activity = json['activity'] != null
+        ? new Activity.fromJson(json['activity'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['user_id'] = this.userId;
     data['type'] = this.type;
     data['reference_id'] = this.referenceId;
     data['date'] = this.date;
     data['start_time'] = this.startTime;
     data['end_time'] = this.endTime;
+    if (this.groupSession != null) {
+      data['group_session'] = this.groupSession!.toJson();
+    }
     if (this.activity != null) {
-      data['activity_group_session'] = this.activity!.toJson();
+      data['activity'] = this.activity!.toJson();
     }
     return data;
   }
 }
 
-class Activity {
+class GroupSession {
   int? id;
   String? colorCode;
   String? name;
@@ -130,24 +104,24 @@ class Activity {
   String? endTime;
   List<Members>? members;
 
-  Activity(
+  GroupSession(
       {this.id,
       this.colorCode,
       this.name,
       this.description,
-      this.startTime,
       this.location,
-      this.members,
-      this.endTime});
+      this.startTime,
+      this.endTime,
+      this.members});
 
-  Activity.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    colorCode = json['color_code'];
-    name = json['name'];
-    description = json['description'];
-    startTime = json['start_time'];
-    endTime = json['end_time'];
+  GroupSession.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? '';
+    colorCode = json['color_code'] ?? 'ffffff';
+    name = json['name'] ?? '';
+    description = json['description'] ?? '';
     location = json['location'] ?? '';
+    startTime = json['start_time'] ?? '';
+    endTime = json['end_time'] ?? '';
     if (json['members'] != null) {
       members = <Members>[];
       json['members'].forEach((v) {
@@ -162,9 +136,9 @@ class Activity {
     data['color_code'] = this.colorCode;
     data['name'] = this.name;
     data['description'] = this.description;
+    data['location'] = this.location;
     data['start_time'] = this.startTime;
     data['end_time'] = this.endTime;
-    data['location'] = this.location;
     if (this.members != null) {
       data['members'] = this.members!.map((v) => v.toJson()).toList();
     }
@@ -183,7 +157,7 @@ class Members {
   String? emergencyPhoneNumber;
   String? dateOfBirth;
   String? address;
-  bool? isPresent;
+  Null? isPresent;
 
   Members(
       {this.id,
@@ -209,7 +183,7 @@ class Members {
     emergencyPhoneNumber = json['emergency_phone_number'];
     dateOfBirth = json['date_of_birth'];
     address = json['address'];
-    isPresent = json['is_present'] ?? false;
+    isPresent = json['is_present'];
   }
 
   Map<String, dynamic> toJson() {
@@ -225,6 +199,43 @@ class Members {
     data['date_of_birth'] = this.dateOfBirth;
     data['address'] = this.address;
     data['is_present'] = this.isPresent;
+    return data;
+  }
+}
+
+class Activity {
+  int? id;
+  String? colorCode;
+  String? name;
+  String? description;
+  String? startTime;
+  String? endTime;
+
+  Activity(
+      {this.id,
+      this.colorCode,
+      this.name,
+      this.description,
+      this.startTime,
+      this.endTime});
+
+  Activity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    colorCode = json['color_code'];
+    name = json['name'];
+    description = json['description'];
+    startTime = json['start_time'];
+    endTime = json['end_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['color_code'] = this.colorCode;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['start_time'] = this.startTime;
+    data['end_time'] = this.endTime;
     return data;
   }
 }
